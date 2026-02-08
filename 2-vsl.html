@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocolo Raiz-17 | O Que Te Bloqueia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Crimson+Text:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #D4A574;
+            --gold-dark: #B8935F;
+            --cream: #F5F1E8;
+            --dark: #2C3E50;
+            --darker: #1A2332;
+            --text-light: #64748B;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: var(--darker);
+            color: var(--cream);
+            overflow-x: hidden;
+        }
+
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(212, 165, 116, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 40px 0 30px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .logo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.1), rgba(212, 165, 116, 0.05));
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            letter-spacing: 2px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--gold);
+            backdrop-filter: blur(10px);
+        }
+
+        .shield-icon {
+            width: 16px;
+            height: 16px;
+            background: var(--gold);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        /* VSL Section */
+        .vsl-section {
+            max-width: 900px;
+            margin: 50px auto;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .vsl-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.2;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .vsl-subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            color: rgba(245, 241, 232, 0.7);
+            margin-bottom: 50px;
+            line-height: 1.6;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            margin-bottom: 60px;
+            border: 3px solid rgba(212, 165, 116, 0.2);
+        }
+
+        .video-container iframe,
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1A2332 0%, #2C3E50 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .play-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: var(--darker);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 40px rgba(212, 165, 116, 0.5);
+        }
+
+        /* Key Points */
+        .key-points {
+            max-width: 900px;
+            margin: 80px auto;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--gold);
+        }
+
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .point-card {
+            background: rgba(212, 165, 116, 0.04);
+            border: 2px solid rgba(212, 165, 116, 0.2);
+            border-radius: 15px;
+            padding: 35px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .point-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--gold), var(--gold-dark));
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.4s ease;
+        }
+
+        .point-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .point-card:hover {
+            background: rgba(212, 165, 116, 0.08);
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .point-number {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--darker);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .point-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .point-description {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: rgba(245, 241, 232, 0.8);
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            max-width: 800px;
+            margin: 80px auto;
+            background: linear-gradient(135deg, rgba(212, 165, 116, 0.08), rgba(212, 165, 116, 0.03));
+            border: 2px solid rgba(212, 165, 116, 0.2);
+            border-radius: 20px;
+            padding: 50px 40px;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .quiz-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+
+        .quiz-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: rgba(245, 241, 232, 0.6);
+            margin-bottom: 40px;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .quiz-option {
+            background: rgba(245, 241, 232, 0.03);
+            border: 2px solid rgba(212, 165, 116, 0.2);
+            border-radius: 12px;
+            padding: 20px 25px;
+            font-size: 1.05rem;
+            color: rgba(245, 241, 232, 0.9);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quiz-option:hover {
+            background: rgba(212, 165, 116, 0.08);
+            border-color: var(--gold);
+            transform: translateX(8px);
+        }
+
+        .quiz-option::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            max-width: 700px;
+            margin: 80px auto;
+            text-align: center;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .cta-headline {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 25px;
+            line-height: 1.2;
+            color: var(--cream);
+        }
+
+        .cta-subheadline {
+            font-size: 1.3rem;
+            color: rgba(245, 241, 232, 0.7);
+            margin-bottom: 50px;
+            line-height: 1.6;
+        }
+
+        .price-box {
+            background: rgba(212, 165, 116, 0.05);
+            border: 2px solid rgba(212, 165, 116, 0.3);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .price-label {
+            font-size: 1rem;
+            color: rgba(245, 241, 232, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 15px;
+            line-height: 1;
+        }
+
+        .price-description {
+            font-size: 1.1rem;
+            color: rgba(245, 241, 232, 0.6);
+        }
+
+        .booking-button {
+            width: 100%;
+            max-width: 500px;
+            padding: 25px 50px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--darker);
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 15px 40px rgba(212, 165, 116, 0.4);
+            position: relative;
+            overflow: hidden;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 15px 40px rgba(212, 165, 116, 0.4);
+            }
+            50% {
+                box-shadow: 0 15px 60px rgba(212, 165, 116, 0.6);
+            }
+        }
+
+        .booking-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .booking-button:hover::before {
+            left: 100%;
+        }
+
+        .booking-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(212, 165, 116, 0.6);
+        }
+
+        .guarantee {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(212, 165, 116, 0.04);
+            border-radius: 12px;
+            border: 1px solid rgba(212, 165, 116, 0.2);
+        }
+
+        .guarantee-title {
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .guarantee-text {
+            font-size: 1rem;
+            color: rgba(245, 241, 232, 0.7);
+            line-height: 1.6;
+        }
+
+        /* What You Get */
+        .what-you-get {
+            max-width: 900px;
+            margin: 80px auto;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .benefits-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            background: rgba(212, 165, 116, 0.04);
+            border: 1px solid rgba(212, 165, 116, 0.15);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            background: rgba(212, 165, 116, 0.08);
+            border-color: var(--gold);
+        }
+
+        .benefit-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .benefit-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+
+        .benefit-content p {
+            font-size: 1rem;
+            color: rgba(245, 241, 232, 0.7);
+            line-height: 1.6;
+        }
+
+        .benefit-price {
+            font-weight: 700;
+            color: var(--gold);
+            margin-top: 8px;
+            font-size: 1.1rem;
+        }
+
+        .total-value {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(212, 165, 116, 0.08);
+            border-radius: 15px;
+        }
+
+        .total-value-label {
+            font-size: 1.1rem;
+            color: rgba(245, 241, 232, 0.6);
+            margin-bottom: 10px;
+        }
+
+        .total-value-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--gold);
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        .final-price {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .final-price-label {
+            font-size: 1.2rem;
+            color: var(--cream);
+            margin-bottom: 10px;
+        }
+
+        .final-price-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--gold);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 20px 40px;
+            color: rgba(245, 241, 232, 0.4);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .price {
+                font-size: 3rem;
+            }
+
+            .final-price-amount {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo-badge">
+                <div class="shield-icon"></div>
+                Protocolo Raiz-17
+            </div>
+        </header>
+
+        <!-- VSL Section -->
+        <section class="vsl-section">
+            <h1 class="vsl-title">O Problema Nunca Foi Falta de Esforço.</h1>
+            <p class="vsl-subtitle">
+                Trabalhar sem resolver o conflito interno só aprofunda o bloqueio.<br>
+                É dinheiro nenhum compensa viver desconectado de ti, das tuas relações e do teu propósito.
+            </p>
+
+            <div class="video-container" id="videoContainer">
+                <!-- Vídeo Local Configurado com Autoplay -->
+                <video 
+                    controls 
+                    autoplay
+                    muted
+                    playsinline
+                    controlsList="nodownload"
+                    preload="auto"
+                    poster=""
+                    id="mainVideo"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; background: #000;">
+                    <source src="assets/videos/video.mp4" type="video/mp4">
+                    <source src="assets/videos/video.webm" type="video/webm">
+                    Teu navegador não suporta a reprodução de vídeos.
+                </video>
+                
+                <!-- Botão para ativar som (aparece no início) -->
+                <div id="unmutePrompt" style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 100; display: none;">
+                    <button onclick="unmuteVideo()" style="
+                        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+                        color: var(--darker);
+                        border: none;
+                        padding: 15px 30px;
+                        border-radius: 30px;
+                        font-size: 1rem;
+                        font-weight: 700;
+                        cursor: pointer;
+                        box-shadow: 0 10px 30px rgba(212, 165, 116, 0.4);
+                        transition: all 0.3s ease;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    ">
+                        <span style="font-size: 1.2rem;">🔊</span>
+                        Ativar Som
+                    </button>
+                </div>
+            </div>
+
+            <script>
+                let videoElement;
+                let unmutePrompt;
+
+                // Função para desmutar o vídeo
+                function unmuteVideo() {
+                    if (videoElement) {
+                        videoElement.muted = false;
+                        videoElement.volume = 1.0;
+                        document.getElementById('unmutePrompt').style.display = 'none';
+                        
+                        // Salva preferência
+                        localStorage.setItem('videoUnmuted', 'true');
+                    }
+                }
+
+                // Verificação e configuração do autoplay
+                window.addEventListener('load', function() {
+                    videoElement = document.getElementById('mainVideo');
+                    unmutePrompt = document.getElementById('unmutePrompt');
+                    
+                    // Tenta verificar se usuário já ativou som antes
+                    const wasUnmuted = localStorage.getItem('videoUnmuted');
+                    
+                    // Evento quando vídeo começa a carregar
+                    videoElement.addEventListener('loadedmetadata', function() {
+                        console.log('✅ Vídeo carregado com sucesso!');
+                        console.log('Duração:', Math.floor(videoElement.duration / 60) + ':' + String(Math.floor(videoElement.duration % 60)).padStart(2, '0'));
+                    });
+                    
+                    // Quando vídeo começa a tocar
+                    videoElement.addEventListener('play', function() {
+                        // Mostra botão de som após 2 segundos (se ainda estiver muted)
+                        setTimeout(function() {
+                            if (videoElement.muted && !wasUnmuted) {
+                                unmutePrompt.style.display = 'block';
+                                unmutePrompt.style.animation = 'fadeInUp 0.5s ease-out';
+                            }
+                        }, 2000);
+                    });
+                    
+                    // Se usuário já tinha desmutado antes, deixa com som
+                    if (wasUnmuted === 'true') {
+                        videoElement.muted = false;
+                        videoElement.volume = 1.0;
+                    }
+                    
+                    // Tenta dar play automaticamente
+                    const playPromise = videoElement.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.then(function() {
+                            console.log('✅ Autoplay funcionou!');
+                        }).catch(function(error) {
+                            console.warn('⚠️ Autoplay bloqueado pelo navegador:', error);
+                            // Se autoplay falhar, mostra botão de play manual
+                            showManualPlayButton();
+                        });
+                    }
+                    
+                    // Tratamento de erros
+                    videoElement.addEventListener('error', function(e) {
+                        console.error('❌ Erro ao carregar vídeo:', e);
+                        const errorCode = videoElement.error ? videoElement.error.code : 'desconhecido';
+                        document.getElementById('videoContainer').innerHTML = `
+                            <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: rgba(212, 165, 116, 0.1); flex-direction: column; padding: 40px; text-align: center;">
+                                <div style="color: var(--cream);">
+                                    <div style="font-size: 3rem; margin-bottom: 20px;">⚠️</div>
+                                    <h3 style="color: var(--gold); margin-bottom: 15px;">Vídeo Não Encontrado</h3>
+                                    <p style="margin-bottom: 10px;">Verifica se o arquivo está no local correto:</p>
+                                    <p style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; margin: 15px 0; font-size: 0.9rem;">
+                                        assets/videos/video.mp4
+                                    </p>
+                                    <p style="font-size: 0.85rem; opacity: 0.6; margin-top: 10px;">
+                                        Código do erro: ${errorCode}
+                                    </p>
+                                    <p style="font-size: 0.9rem; opacity: 0.7; margin-top: 15px;">
+                                        📁 Estrutura correta:<br>
+                                        protocolo-raiz17/<br>
+                                        └── assets/<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;└── videos/<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── video.mp4
+                                    </p>
+                                </div>
+                            </div>
+                        `;
+                    });
+                });
+
+                // Função para mostrar botão de play manual (caso autoplay seja bloqueado)
+                function showManualPlayButton() {
+                    const container = document.getElementById('videoContainer');
+                    const playBtn = document.createElement('div');
+                    playBtn.id = 'manualPlayBtn';
+                    playBtn.style.cssText = `
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        z-index: 99;
+                        cursor: pointer;
+                        text-align: center;
+                    `;
+                    playBtn.innerHTML = `
+                        <div style="
+                            width: 100px;
+                            height: 100px;
+                            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+                            border-radius: 50%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            box-shadow: 0 15px 50px rgba(212, 165, 116, 0.5);
+                            transition: all 0.3s ease;
+                        " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                            <span style="font-size: 40px; margin-left: 8px; color: var(--darker);">▶</span>
+                        </div>
+                        <p style="color: var(--gold); margin-top: 15px; font-size: 1.1rem; font-weight: 600;">
+                            Clica para Reproduzir
+                        </p>
+                    `;
+                    
+                    playBtn.onclick = function() {
+                        videoElement.play();
+                        playBtn.remove();
+                    };
+                    
+                    container.appendChild(playBtn);
+                }
+            </script>
+        </section>
+
+        <!-- Key Points -->
+        <section class="key-points">
+            <h2 class="section-title">As 3 Fases Que Desbloqueiam o Que Está Invisível</h2>
+            
+            <div class="points-grid">
+                <div class="point-card">
+                    <div class="point-number">01</div>
+                    <h3 class="point-title">Consciência Real</h3>
+                    <p class="point-description">
+                        Compreender como padrões inconscientes moldam decisões, escolhas e posicionamento.
+                    </p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">02</div>
+                    <h3 class="point-title">Identificação do Bloqueio</h3>
+                    <p class="point-description">
+                        Diagnóstico prático para identificar o bloqueio dominante: aversão, compromisso ou procrastinação.
+                    </p>
+                </div>
+
+                <div class="point-card">
+                    <div class="point-number">03</div>
+                    <h3 class="point-title">Direção e Ativação</h3>
+                    <p class="point-description">
+                        Clareza de identidade, valor e próximo passo certo para romper o teto.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz -->
+        <section class="quiz-section">
+            <h2 class="quiz-title">Responde Só à Verdade:</h2>
+            <p class="quiz-subtitle">
+                Tu já sentiste pelo menos 2 destas coisas? (marca as opções que se aplicam a ti)
+            </p>
+
+            <div class="quiz-options">
+                <label class="quiz-option">
+                    Já ganhaste mais dinheiro antes... mas hoje estás abaixo do que sabes que és capaz
+                </label>
+                <label class="quiz-option">
+                    Trabalhas muito, mas sentes que estás sempre a empurrar resultados à força
+                </label>
+                <label class="quiz-option">
+                    Comparas-te em silêncio e tens medo de deixar a 6 meses estar exatamente igual
+                </label>
+                <label class="quiz-option">
+                    Tens dificuldade em descansar sem culpa
+                </label>
+                <label class="quiz-option">
+                    O negócio até anda... mas as relações estão tensas, vazias ou a falhar
+                </label>
+                <label class="quiz-option">
+                    O dinheiro que ganhaste não te preencheu da forma que achava que ia preencher
+                </label>
+            </div>
+        </section>
+
+        <!-- What You Get -->
+        <section class="what-you-get">
+            <h2 class="section-title">Recapitulando Tudo o Que Vais Receber<br>no Protocolo em 17 Dias:</h2>
+
+            <div class="benefits-list">
+                <div class="benefit-item">
+                    <div class="benefit-icon">📚</div>
+                    <div class="benefit-content">
+                        <h3>Formação completa sobre bloqueios emocionais invisíveis</h3>
+                        <p>Como os grandes empreendedores desbloquearam padrões internos que travavam fatalmente, decisões e posicionamento.</p>
+                        <p class="benefit-price">Valor: 197€</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">🎯</div>
+                    <div class="benefit-content">
+                        <h3>Conteúdo 100% autoguiado (17 dias)</h3>
+                        <p>Acesso imediato a vídeos curtos, diretos e sequenciais, com progressão lógica e profunda.</p>
+                        <p class="benefit-price">Valor: 80€</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">✅</div>
+                    <div class="benefit-content">
+                        <h3>Tarefas práticas de ativação interna</h3>
+                        <p>Exercícios orientados para gerar clareza, reposicionamento interno e decisões conscientes.</p>
+                        <p class="benefit-price">Valor: 68€</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="total-value">
+                <p class="total-value-label">Total:</p>
+                <p class="total-value-amount">345€</p>
+            </div>
+
+            <div class="final-price">
+                <p class="final-price-label">Tudo isto não é vendido como produto.<br>
+                É disponibilizado como <strong>ponto de entrada</strong>.</p>
+                <p class="final-price-amount">17€</p>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2 class="cta-headline">
+                Ou Ganhas Clareza Sobre o Que Te Bloqueia<br>ou Devolvemos o Teu Dinheiro.
+            </h2>
+            <p class="cta-subheadline">
+                Se ao final do Protocolo Raiz-17 não conseguires identificar claramente qual é o bloqueio interno que está a travar o teu crescimento, podes pedir o reembolso total.
+            </p>
+
+            <div class="price-box">
+                <p class="price-label">Acesso Vitalício</p>
+                <p class="price">17€</p>
+                <p class="price-description">Pagamento único • Garantia Total • Propriedade Protegida</p>
+            </div>
+
+            <button class="booking-button" onclick="window.location.href='3-obrigado.html'">
+                Quero Aceder ao Protocolo Raiz-17 →
+            </button>
+
+            <div class="guarantee">
+                <p class="guarantee-title">✓ Simples. Sem discussão.</p>
+                <p class="guarantee-text">
+                    O Protocolo Raiz-17 não é o fim.<br>
+                    É o início.<br><br>
+                    Algumas pessoas resolvem aqui.<br>
+                    Outras percebem que precisam de ir mais fundo.<br><br>
+                    Mas isso... só depois da clareza.
+                </p>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 Protocolo Raiz-17 • Todos os direitos reservados</p>
+        </footer>
+    </div>
+
+    <script>
+        // Quiz interaction
+        const quizOptions = document.querySelectorAll('.quiz-option');
+        quizOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                this.style.background = 'rgba(212, 165, 116, 0.15)';
+                this.style.borderColor = 'var(--gold)';
+            });
+        });
+
+        // Smooth scroll on load
+        window.addEventListener('load', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
