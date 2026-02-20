@@ -400,6 +400,47 @@
             }
         }
 
+        .phone-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .ddd-select {
+            width: 140px;
+            flex-shrink: 0;
+            padding: 16px 12px;
+            font-size: 1.05rem;
+            font-family: 'Crimson Text', serif;
+            background: rgba(245, 241, 232, 0.05);
+            border: 2px solid rgba(212, 165, 116, 0.3);
+            border-radius: 10px;
+            color: var(--cream);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23D4A574' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            padding-right: 30px;
+        }
+
+        .ddd-select:focus {
+            outline: none;
+            border-color: var(--gold);
+            background-color: rgba(245, 241, 232, 0.1);
+            box-shadow: 0 0 0 4px rgba(212, 165, 116, 0.1);
+        }
+
+        .ddd-select option {
+            background: var(--darker);
+            color: var(--cream);
+        }
+
+        .phone-row input {
+            flex: 1;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .container {
@@ -464,6 +505,45 @@
                     <label for="email">Melhor Email</label>
                     <input type="email" id="email" name="email" placeholder="teu@email.com" required>
                 </div>
+
+                <div class="form-group">
+                    <label for="phone">WhatsApp / Telefone</label>
+                    <div class="phone-row">
+                        <select id="ddi" name="ddi" class="ddd-select" required>
+                            <option value="" disabled selected>DDI</option>
+                            <option value="+55">🇧🇷 +55 – Brasil</option>
+                            <option value="+351">🇵🇹 +351 – Portugal</option>
+                            <option value="+1">🇺🇸 +1 – EUA / Canadá</option>
+                            <option value="+44">🇬🇧 +44 – Reino Unido</option>
+                            <option value="+34">🇪🇸 +34 – Espanha</option>
+                            <option value="+33">🇫🇷 +33 – França</option>
+                            <option value="+49">🇩🇪 +49 – Alemanha</option>
+                            <option value="+39">🇮🇹 +39 – Itália</option>
+                            <option value="+31">🇳🇱 +31 – Holanda</option>
+                            <option value="+41">🇨🇭 +41 – Suíça</option>
+                            <option value="+32">🇧🇪 +32 – Bélgica</option>
+                            <option value="+54">🇦🇷 +54 – Argentina</option>
+                            <option value="+56">🇨🇱 +56 – Chile</option>
+                            <option value="+57">🇨🇴 +57 – Colômbia</option>
+                            <option value="+52">🇲🇽 +52 – México</option>
+                            <option value="+598">🇺🇾 +598 – Uruguai</option>
+                            <option value="+595">🇵🇾 +595 – Paraguai</option>
+                            <option value="+591">🇧🇴 +591 – Bolívia</option>
+                            <option value="+593">🇪🇨 +593 – Equador</option>
+                            <option value="+51">🇵🇪 +51 – Peru</option>
+                            <option value="+58">🇻🇪 +58 – Venezuela</option>
+                            <option value="+61">🇦🇺 +61 – Austrália</option>
+                            <option value="+81">🇯🇵 +81 – Japão</option>
+                            <option value="+82">🇰🇷 +82 – Coreia do Sul</option>
+                            <option value="+86">🇨🇳 +86 – China</option>
+                            <option value="+91">🇮🇳 +91 – Índia</option>
+                            <option value="+27">🇿🇦 +27 – África do Sul</option>
+                            <option value="+971">🇦🇪 +971 – Emirados Árabes</option>
+                            <option value="+7">🇷🇺 +7 – Rússia</option>
+                        </select>
+                        <input type="tel" id="phone" name="phone" placeholder="9 0000-0000" required>
+                    </div>
+                </div>
                 
                 <button type="submit" class="cta-button">
                     Aceder Agora →
@@ -473,55 +553,23 @@
             <p class="trust-text">🔒 Os teus dados estão seguros. Respeitamos a tua privacidade.</p>
         </section>
 
-        <section class="trust-signals">
-            <div class="testimonials">
-                <div class="testimonial">
-                    <div class="testimonial-header">
-                        <div class="avatar-placeholder">JG</div>
-                        <div class="testimonial-author">
-                            <div class="author-name">João Gonçalves</div>
-                            <div class="author-title">Empresário</div>
-                        </div>
-                    </div>
-                    <p class="testimonial-text">
-                        "Finalmente consegui entender de onde vinha a minha estagnação, que caraçabruxa!"
-                    </p>
-                </div>
 
-                <div class="testimonial">
-                    <div class="testimonial-header">
-                        <div class="avatar-placeholder">DM</div>
-                        <div class="testimonial-author">
-                            <div class="author-name">Daniel Mattos</div>
-                            <div class="author-title">Consultor de Gestão</div>
-                        </div>
-                    </div>
-                    <p class="testimonial-text">
-                        "O meu mito estava dentro de mim, escondido. Este protocolo expôs isso em dias."
-                    </p>
-                </div>
-
-                <div class="testimonial">
-                    <div class="testimonial-header">
-                        <div class="avatar-placeholder">PR</div>
-                        <div class="testimonial-author">
-                            <div class="author-name">Pedro Rodrigues</div>
-                            <div class="author-title">Empreendedor E-commerce</div>
-                        </div>
-                    </div>
-                    <p class="testimonial-text">
-                        "Foi um impacto muito grande. Parar e perceber que realmente sei o que fazer, só que tinha um bloqueio que eu não pensava que tinha salto atrás em mim."
-                    </p>
-                </div>
-            </div>
-        </section>
 
         <footer>
-            <p>© 2026 Protocolo Raiz-17 • Todos os direitos reservados</p>
+            <p>© 2026 Helder Lages • Todos os direitos reservados</p>
         </footer>
     </div>
 
     <script>
+        // Phone number formatting
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 9) {
+                value = value.replace(/(\d{1})(\d{4})(\d{0,4})/, '$1 $2-$3');
+            }
+            e.target.value = value;
+        });
+
         // Smooth form submission
         document.getElementById('optinForm').addEventListener('submit', function(e) {
             const button = this.querySelector('.cta-button');

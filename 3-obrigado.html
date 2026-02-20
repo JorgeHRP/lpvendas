@@ -3,24 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem-vindo ao Protocolo Raiz-17</title>
+    <title>Sessão Confirmada | Protocolo Raiz-17</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Crimson+Text:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --gold: #D4A574;
             --gold-dark: #B8935F;
             --cream: #F5F1E8;
-            --dark: #2C3E50;
             --darker: #1A2332;
-            --success: #4CAF50;
+            --green: #4CAF50;
         }
 
         body {
@@ -29,107 +24,79 @@
             color: var(--cream);
             overflow-x: hidden;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        /* Animated Background */
-        .bg-celebration {
+        /* ── Background subtle particles ── */
+        .bg-glow {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             pointer-events: none;
-            overflow: hidden;
+            background:
+                radial-gradient(ellipse 60% 40% at 20% 10%, rgba(212,165,116,0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 50% at 80% 90%, rgba(212,165,116,0.04) 0%, transparent 70%);
         }
-
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: var(--gold);
-            opacity: 0;
-            animation: confettiFall 3s ease-out infinite;
-        }
-
-        @keyframes confettiFall {
-            0% {
-                opacity: 1;
-                transform: translateY(-100vh) rotate(0deg);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(100vh) rotate(720deg);
-            }
-        }
-
-        .confetti:nth-child(1) { left: 10%; animation-delay: 0s; background: var(--gold); }
-        .confetti:nth-child(2) { left: 20%; animation-delay: 0.5s; background: var(--gold-dark); }
-        .confetti:nth-child(3) { left: 30%; animation-delay: 1s; background: var(--cream); }
-        .confetti:nth-child(4) { left: 40%; animation-delay: 1.5s; background: var(--gold); }
-        .confetti:nth-child(5) { left: 50%; animation-delay: 0.8s; background: var(--gold-dark); }
-        .confetti:nth-child(6) { left: 60%; animation-delay: 1.2s; background: var(--cream); }
-        .confetti:nth-child(7) { left: 70%; animation-delay: 0.3s; background: var(--gold); }
-        .confetti:nth-child(8) { left: 80%; animation-delay: 1.8s; background: var(--gold-dark); }
-        .confetti:nth-child(9) { left: 90%; animation-delay: 0.6s; background: var(--cream); }
 
         .container {
-            max-width: 800px;
+            max-width: 720px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 60px 24px 80px;
             position: relative;
             z-index: 10;
         }
 
-        /* Success Icon */
-        .success-icon {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 40px;
-            background: linear-gradient(135deg, var(--success), #45a049);
+        /* ── Badge ── */
+        .logo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(212,165,116,0.1), rgba(212,165,116,0.04));
+            border: 1px solid rgba(212,165,116,0.3);
+            padding: 7px 20px;
+            border-radius: 30px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 50px;
+        }
+        .shield {
+            width: 14px; height: 14px;
+            background: var(--gold);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        /* ── Success icon ── */
+        .success-ring {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 36px;
             border-radius: 50%;
+            background: linear-gradient(135deg, #4CAF50, #388E3C);
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: scaleIn 0.6s ease-out;
-            box-shadow: 0 20px 60px rgba(76, 175, 80, 0.3);
+            box-shadow: 0 0 0 16px rgba(76,175,80,0.1), 0 20px 60px rgba(76,175,80,0.25);
+            animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+        .success-ring svg { width: 52px; height: 52px; stroke: white; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+        .checkmark { stroke-dasharray: 60; stroke-dashoffset: 60; animation: drawCheck 0.5s ease-out 0.5s forwards; }
+        @keyframes drawCheck { to { stroke-dashoffset: 0; } }
+        @keyframes popIn {
+            0%   { transform: scale(0); opacity: 0; }
+            60%  { transform: scale(1.15); }
+            100% { transform: scale(1); opacity: 1; }
         }
 
-        .success-icon::before {
-            content: '✓';
-            font-size: 60px;
-            color: white;
-            font-weight: bold;
-        }
-
-        @keyframes scaleIn {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        /* Content */
-        .content {
-            text-align: center;
-            animation: fadeInUp 0.8s ease-out 0.3s both;
-        }
+        /* ── Hero text ── */
+        .hero { text-align: center; animation: fadeUp 0.7s ease-out 0.3s both; }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-size: clamp(2.2rem, 6vw, 3.4rem);
             font-weight: 900;
-            line-height: 1.2;
-            margin-bottom: 25px;
+            line-height: 1.15;
+            margin-bottom: 18px;
             background: linear-gradient(135deg, var(--cream) 0%, var(--gold) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -137,404 +104,278 @@
         }
 
         .subtitle {
-            font-size: clamp(1.2rem, 3vw, 1.6rem);
-            line-height: 1.6;
-            color: rgba(245, 241, 232, 0.8);
-            margin-bottom: 50px;
-            font-weight: 400;
-        }
-
-        .highlight {
-            color: var(--gold);
-            font-weight: 700;
-        }
-
-        /* Next Steps */
-        .next-steps {
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.08), rgba(212, 165, 116, 0.03));
-            border: 2px solid rgba(212, 165, 116, 0.2);
-            border-radius: 20px;
-            padding: 50px 40px;
-            margin: 60px 0;
-            text-align: left;
-        }
-
-        .steps-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--gold);
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .step {
-            display: flex;
-            gap: 25px;
-            margin-bottom: 35px;
-            align-items: flex-start;
-        }
-
-        .step:last-child {
+            font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+            line-height: 1.65;
+            color: rgba(245,241,232,0.75);
             margin-bottom: 0;
         }
+        .highlight { color: var(--gold); font-weight: 700; }
 
-        .step-number {
-            min-width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            border-radius: 50%;
+        /* ── Divider ── */
+        .divider {
+            width: 60px; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 40px auto;
+        }
+
+        /* ── Confirmation cards ── */
+        .cards { display: grid; gap: 16px; margin-bottom: 40px; animation: fadeUp 0.7s ease-out 0.5s both; }
+
+        .card {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            color: var(--darker);
-            font-size: 1.4rem;
+            align-items: flex-start;
+            gap: 18px;
+            background: rgba(212,165,116,0.04);
+            border: 1px solid rgba(212,165,116,0.18);
+            border-radius: 14px;
+            padding: 24px 28px;
+            transition: border-color 0.3s;
+        }
+        .card:hover { border-color: rgba(212,165,116,0.4); }
+
+        .card-icon {
+            font-size: 2rem;
             flex-shrink: 0;
+            line-height: 1;
+            margin-top: 2px;
         }
 
-        .step-content h3 {
+        .card-body h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: var(--gold);
-            margin-bottom: 10px;
+            margin-bottom: 6px;
+        }
+        .card-body p {
+            font-size: 1rem;
+            line-height: 1.65;
+            color: rgba(245,241,232,0.72);
         }
 
-        .step-content p {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: rgba(245, 241, 232, 0.8);
-        }
-
-        /* Email Notice */
-        .email-notice {
-            background: rgba(76, 175, 80, 0.1);
-            border: 2px solid rgba(76, 175, 80, 0.3);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 40px 0;
+        /* ── Instagram CTA ── */
+        .instagram-section {
             text-align: center;
+            margin: 10px 0 50px;
+            animation: fadeUp 0.7s ease-out 0.7s both;
         }
 
-        .email-notice-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .email-notice h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--success);
-            margin-bottom: 10px;
-        }
-
-        .email-notice p {
-            font-size: 1.05rem;
-            color: rgba(245, 241, 232, 0.7);
-            line-height: 1.6;
-        }
-
-        /* Access Button */
-        .access-section {
-            text-align: center;
-            margin: 60px 0;
-        }
-
-        .access-button {
-            display: inline-block;
-            padding: 25px 60px;
-            font-size: 1.4rem;
-            font-weight: 700;
-            font-family: 'Playfair Display', serif;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--darker);
-            text-decoration: none;
-            border-radius: 15px;
-            transition: all 0.4s ease;
+        .instagram-label {
+            font-size: 1rem;
+            color: rgba(245,241,232,0.55);
+            margin-bottom: 18px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 15px 40px rgba(212, 165, 116, 0.4);
+            letter-spacing: 1.5px;
+            font-size: 0.85rem;
+        }
+
+        .instagram-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 36px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 30px rgba(131,58,180,0.35);
+            transition: all 0.35s ease;
             position: relative;
             overflow: hidden;
         }
-
-        .access-button::before {
+        .instagram-btn::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
+            inset: 0;
+            background: linear-gradient(135deg, #fcb045, #fd1d1d, #833ab4);
+            opacity: 0;
+            transition: opacity 0.35s;
+        }
+        .instagram-btn:hover::before { opacity: 1; }
+        .instagram-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(131,58,180,0.5); }
+        .instagram-btn span { position: relative; z-index: 1; }
+        .instagram-btn svg { position: relative; z-index: 1; width: 22px; height: 22px; fill: white; flex-shrink: 0; }
+
+        /* ── Creator section ── */
+        .creator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 50px 40px;
+            background: linear-gradient(135deg, rgba(212,165,116,0.07), rgba(212,165,116,0.02));
+            border: 1px solid rgba(212,165,116,0.18);
+            border-radius: 20px;
+            margin-bottom: 60px;
+            animation: fadeUp 0.7s ease-out 0.9s both;
+        }
+
+        .creator-photo {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid rgba(212,165,116,0.4);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            margin-bottom: 24px;
+            flex-shrink: 0;
+        }
+        .creator-photo img {
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.6s ease;
+            object-fit: cover;
+            display: block;
         }
-
-        .access-button:hover::before {
-            left: 100%;
-        }
-
-        .access-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px rgba(212, 165, 116, 0.6);
-        }
-
-        /* Support Section */
-        .support-section {
-            background: rgba(212, 165, 116, 0.04);
-            border: 1px solid rgba(212, 165, 116, 0.15);
-            border-radius: 15px;
-            padding: 35px;
-            margin: 40px 0;
-        }
-
-        .support-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--gold);
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .support-text {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: rgba(245, 241, 232, 0.7);
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .support-email {
-            text-align: center;
-            font-size: 1.2rem;
-            color: var(--gold);
-            font-weight: 700;
-        }
-
-        .support-email a {
-            color: var(--gold);
-            text-decoration: none;
-            border-bottom: 2px solid var(--gold);
-            transition: all 0.3s ease;
-        }
-
-        .support-email a:hover {
-            color: var(--cream);
-            border-bottom-color: var(--cream);
-        }
-
-        /* About Creator */
-        .creator-section {
-            margin: 60px 0;
-            text-align: center;
-        }
-
-        .creator-image-placeholder {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 30px;
-            border-radius: 50%;
+        .creator-photo .fallback {
+            width: 100%;
+            height: 100%;
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            border: 4px solid rgba(212, 165, 116, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 2.5rem;
+            font-weight: 700;
             color: var(--darker);
         }
 
         .creator-name {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             font-weight: 700;
             color: var(--gold);
-            margin-bottom: 10px;
+            margin-bottom: 6px;
         }
-
-        .creator-title {
-            font-size: 1.1rem;
-            color: rgba(245, 241, 232, 0.6);
-            margin-bottom: 25px;
+        .creator-role {
+            font-size: 0.95rem;
+            color: rgba(245,241,232,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 22px;
         }
-
         .creator-bio {
             font-size: 1.05rem;
             line-height: 1.8;
-            color: rgba(245, 241, 232, 0.8);
-            max-width: 600px;
-            margin: 0 auto;
+            color: rgba(245,241,232,0.78);
+            max-width: 560px;
         }
 
-        /* Footer */
+        /* ── Footer ── */
         footer {
             text-align: center;
-            padding: 40px 20px;
-            color: rgba(245, 241, 232, 0.4);
-            font-size: 0.9rem;
+            color: rgba(245,241,232,0.3);
+            font-size: 0.88rem;
+            padding-bottom: 20px;
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* ── Animations ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 30px 15px;
-            }
-
-            .next-steps {
-                padding: 35px 25px;
-            }
-
-            .step {
-                gap: 15px;
-            }
-
-            .step-number {
-                min-width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            .creator { padding: 36px 24px; }
+            .card { padding: 20px; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-celebration">
-        <div class="confetti"></div>
-        <div class="confetti"></div>
-        <div class="confetti"></div>
-        <div class="confetti"></div>
-        <div class="confetti"></div>
-        <div class="confetti"></div>
-        <div class="confetti"></div>
-        <div class="confetti"></div>
-        <div class="confetti"></div>
-    </div>
-    
+    <div class="bg-glow"></div>
+
     <div class="container">
-        <div class="success-icon"></div>
 
-        <div class="content">
-            <h1>Bem-vindo ao Protocolo Raiz-17!</h1>
+        <div style="text-align:center">
+            <div class="logo-badge">
+                <div class="shield"></div>
+                Protocolo Raiz-17
+            </div>
+        </div>
+
+        <!-- Success icon -->
+        <div style="text-align:center">
+            <div class="success-ring">
+                <svg viewBox="0 0 52 52">
+                    <polyline class="checkmark" points="14,27 22,35 38,19"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Hero -->
+        <div class="hero">
+            <h1>Sessão Confirmada.</h1>
             <p class="subtitle">
-                O teu acesso está <span class="highlight">confirmado</span>.<br>
-                Agora começa a jornada de <span class="highlight">17 dias</span> que vai desbloquear o que está invisível.
+                O teu agendamento está feito.<br>
+                Agora é só aparecer — vemo-nos em breve.
             </p>
         </div>
 
-        <div class="email-notice">
-            <div class="email-notice-icon">📧</div>
-            <h3>Verifica o Teu Email</h3>
-            <p>
-                Enviámos todos os detalhes de acesso para o email que forneceste.<br>
-                <strong>Não te esqueças de verificar a pasta de spam/promoções!</strong>
-            </p>
-        </div>
+        <div class="divider"></div>
 
-        <div class="next-steps">
-            <h2 class="steps-title">Os Teus Próximos Passos:</h2>
-
-            <div class="step">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                    <h3>Acede à Área de Membros</h3>
-                    <p>Clica no botão abaixo ou usa o link que enviámos por email para acederes à tua área exclusiva.</p>
+        <!-- Confirmation cards -->
+        <div class="cards">
+            <div class="card">
+                <div class="card-icon">📧</div>
+                <div class="card-body">
+                    <h3>Verifica o teu Email</h3>
+                    <p>Recebeste uma confirmação com os detalhes da sessão. Se não encontrares, verifica a pasta de <strong>spam ou promoções</strong>.</p>
                 </div>
             </div>
 
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                    <h3>Começa o Dia 1</h3>
-                    <p>O protocolo está dividido em 17 dias sequenciais. Cada dia tem vídeos curtos e exercícios práticos de ativação interna.</p>
-                </div>
-            </div>
-
-            <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                    <h3>Segue o Ritmo</h3>
-                    <p>Dedica 15-30 minutos por dia. A transformação acontece na consistência, não na intensidade.</p>
-                </div>
-            </div>
-
-            <div class="step">
-                <div class="step-number">4</div>
-                <div class="step-content">
-                    <h3>Completa os Exercícios</h3>
-                    <p>As tarefas práticas são essenciais. Elas geram clareza sobre o teu bloqueio interno real.</p>
+            <div class="card">
+                <div class="card-icon">💬</div>
+                <div class="card-body">
+                    <h3>Verifica o teu WhatsApp</h3>
+                    <p>Podes receber um lembrete ou mensagem de confirmação no WhatsApp que indicaste. Mantém o número ativo.</p>
                 </div>
             </div>
         </div>
 
-        <div class="access-section">
-            <a href="#" class="access-button">Aceder à Área de Membros →</a>
-            <p style="margin-top: 20px; font-size: 0.95rem; color: rgba(245, 241, 232, 0.5);">
-                Link também disponível no teu email
-            </p>
+        <!-- Instagram CTA -->
+        <div class="instagram-section">
+            <p class="instagram-label">Enquanto isso, segue para ficares por dentro</p>
+            <a href="https://www.instagram.com/helderlages.10/" target="_blank" class="instagram-btn">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+                <span>Seguir no Instagram</span>
+            </a>
         </div>
 
-        <div class="support-section">
-            <h3 class="support-title">Precisas de Ajuda?</h3>
-            <p class="support-text">
-                Se tiveres alguma dúvida ou problema com o acesso,<br>
-                estamos aqui para te apoiar.
-            </p>
-            <p class="support-email">
-                <a href="/cdn-cgi/l/email-protection#e19294918e939584a191938e958e828e8d8e9380889bd0d6cf828e8c"><span class="__cf_email__" data-cfemail="215254514e5355446151534e554e424e4d4e5340485b10160f424e4c">[email&#160;protected]</span></a>
-            </p>
-        </div>
-
-        <div class="creator-section">
-            <div style="width: 150px; height: 150px; margin: 0 auto 20px; border-radius: 50%; overflow: hidden; border: 4px solid rgba(212, 165, 116, 0.3); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
-                <img src="assets/images/FOTO_HELDER_LAGES.jpg" 
-                     alt="Hélder Rafael da Silva Lages" 
-                     style="width: 100%; height: 100%; object-fit: cover;"
-                     onerror="this.parentElement.innerHTML='<div style=\'width:100%;height:100%;background:linear-gradient(135deg,var(--gold),var(--gold-dark));display:flex;align-items:center;justify-content:center;font-size:3rem;color:var(--darker);font-weight:700;\'>HL</div>'">
+        <!-- Creator section -->
+        <div class="creator">
+            <div class="creator-photo">
+                <img src="assets/images/FOTO_HELDER_LAGES.jpg"
+                     alt="Hélder Lages"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="fallback" style="display:none;">HL</div>
             </div>
-            <p style="font-size: 0.85rem; color: rgba(245, 241, 232, 0.4); margin-bottom: 20px; font-style: italic;">
-            </p>
             <h3 class="creator-name">Hélder Rafael da Silva Lages</h3>
-            <p class="creator-title">Criador do Protocolo Raiz-17</p>
+            <p class="creator-role">Criador do Protocolo Raiz-17</p>
             <p class="creator-bio">
                 Aos 24 anos, tornou-se um comunicador nato, escritor, investidor, empresário e mentor de empreendedores, 
                 após ter faturado os seus primeiros 6 dígitos através do digital aos 21 anos.<br><br>
                 É o desenvolvedor da Teoria do Eixo Invisível e fundador da APP EXPERIENCE — uma experiência presencial 
                 de 3 dias que já impactou centenas de vidas em Portugal, criando um espaço seguro para cura emocional, 
-                reconexão espiritual e ativação da prosperidade.<br><br>
-                O seu trabalho não é sobre motivação passageira, mas sobre transformação interior real, clareza de identidade 
-                e alinhamento entre vida, relações e prosperidade.
+                reconexão espiritual e ativação da prosperidade.
             </p>
         </div>
 
         <footer>
-            <p>© 2026 Protocolo Raiz-17 • Todos os direitos reservados</p>
-            <p style="margin-top: 10px;">
-                <a href="#" style="color: rgba(245, 241, 232, 0.4); text-decoration: none; margin: 0 10px;">Termos de Uso</a> • 
-                <a href="#" style="color: rgba(245, 241, 232, 0.4); text-decoration: none; margin: 0 10px;">Privacidade</a>
-            </p>
+            <p>© 2026 Helder Lages • Todos os direitos reservados</p>
         </footer>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Smooth entrance animation
+    <script>
+        // Fade in suave
+        document.body.style.opacity = '0';
         window.addEventListener('load', function() {
-            document.body.style.opacity = '0';
-            setTimeout(function() {
-                document.body.style.transition = 'opacity 0.5s ease';
-                document.body.style.opacity = '1';
-            }, 100);
+            document.body.style.transition = 'opacity 0.6s ease';
+            document.body.style.opacity = '1';
         });
-
-        // Confetti randomization
-        const confettiElements = document.querySelectorAll('.confetti');
-        confettiElements.forEach(confetti => {
-            const randomDelay = Math
+    </script>
+</body>
+</html>

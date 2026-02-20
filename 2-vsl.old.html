@@ -619,22 +619,17 @@
         }
         #calendlySection h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
+            font-size: 2rem;
             font-weight: 700;
             text-align: center;
             color: var(--gold);
-            margin-bottom: 16px;
+            margin-bottom: 28px;
         }
         .calendly-wrapper {
             border: 2px solid rgba(212,165,116,0.2);
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-        }
-        .calendly-inline-widget {
-            height: calc(100vh - 160px) !important;
-            min-height: 550px !important;
-            max-height: 900px !important;
         }
     </style>
 </head>
@@ -701,30 +696,8 @@
                 <div class="calendly-wrapper">
                     <div class="calendly-inline-widget" id="calendlyWidget"
                         data-url="https://calendly.com/vitormoreninho2/30min?background_color=121b26&text_color=d9b99b&primary_color=d9b99b"
-                        style="min-width:320px;">
+                        style="min-width:320px;height:700px;">
                     </div>
-                </div>
-                <!-- Botão fallback — aparece 3s após o widget carregar, esconde-se se o redirect acontecer -->
-                <div id="calendlyFallback" style="display:none; text-align:center; margin-top:30px;">
-                    <p style="color:rgba(245,241,232,0.6); font-size:1rem; margin-bottom:16px;">
-                        Sessão agendada? Clica para continuar →
-                    </p>
-                    <a href="3-obrigado.html" style="
-                        display:inline-block;
-                        padding:18px 50px;
-                        font-family:'Playfair Display',serif;
-                        font-size:1.15rem;
-                        font-weight:700;
-                        background:linear-gradient(135deg,var(--gold),var(--gold-dark));
-                        color:var(--darker);
-                        border-radius:12px;
-                        text-decoration:none;
-                        letter-spacing:0.5px;
-                        box-shadow:0 10px 30px rgba(212,165,116,0.35);
-                        transition:all .3s ease;
-                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-                        Confirmar Agendamento ✓
-                    </a>
                 </div>
             </div>
 
@@ -801,10 +774,7 @@
                         const params = new URLSearchParams(window.location.search);
                         const name  = params.get('name')  || '';
                         const email = params.get('email') || '';
-                        // redirect_uri faz o Calendly redirecionar nativamente após agendamento
-                        var baseOrigin = window.location.origin + window.location.pathname.replace(/[^/]*$/, '');
-                        var redirectUri = baseOrigin + '3-obrigado.html';
-                        let url = 'https://calendly.com/vitormoreninho2/30min?background_color=121b26&text_color=d9b99b&primary_color=d9b99b&redirect_uri=' + encodeURIComponent(redirectUri);
+                        let url = 'https://calendly.com/vitormoreninho2/30min?background_color=121b26&text_color=d9b99b&primary_color=d9b99b';
                         if (name)  url += '&name='  + encodeURIComponent(name);
                         if (email) url += '&email=' + encodeURIComponent(email);
                         document.getElementById('calendlyWidget').setAttribute('data-url', url);
@@ -815,9 +785,6 @@
                         calendlyLoaded = true;
                     }
                     setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
-                    showFallbackAfterDelay();
-                    // Inicia o polling do iframe após o widget carregar
-                    setTimeout(startIframePolling, 3000);
                 }
 
                 function unmuteVideo() {
@@ -913,86 +880,6 @@
         window.addEventListener('load', function() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
-
-        // ═══════════════════════════════════════════════════════
-        // REDIRECT APÓS AGENDAMENTO NO CALENDLY
-        // Estratégia tripla: postMessage + iframe polling + botão fallback
-        // ═══════════════════════════════════════════════════════
-
-        var redirectDone = false;
-
-        function doRedirect() {
-            if (redirectDone) return;
-            redirectDone = true;
-            // Pequena animação antes de redirecionar
-            document.body.style.transition = 'opacity 0.5s ease';
-            document.body.style.opacity = '0.4';
-            setTimeout(function() {
-                window.location.href = '3-obrigado.html';
-            }, 600);
-        }
-
-        // ── Estratégia 1: postMessage (funciona em alguns ambientes) ──
-        window.addEventListener('message', function(e) {
-            try {
-                var data = e.data;
-                if (typeof data === 'string') data = JSON.parse(data);
-                if (
-                    data.event === 'calendly.event_scheduled' ||
-                    data.type  === 'calendly.event_scheduled'
-                ) {
-                    doRedirect();
-                }
-            } catch(err) {}
-        });
-
-        // ── Estratégia 2: polling do iframe ──
-        // O Calendly muda a URL do iframe para /confirmation quando o agendamento é feito.
-        // Também podemos detetar pelo título ou por mensagens de texto na página.
-        var iframeCheckInterval = null;
-
-        function startIframePolling() {
-            if (iframeCheckInterval) return;
-            iframeCheckInterval = setInterval(function() {
-                var iframe = document.querySelector('.calendly-inline-widget iframe');
-                if (!iframe) return;
-                try {
-                    // Tenta aceder ao href do iframe (falha cross-origin, mas tenta)
-                    var iframeSrc = iframe.src || iframe.getAttribute('src') || '';
-                    if (iframeSrc.indexOf('confirmation') !== -1 || iframeSrc.indexOf('scheduled') !== -1) {
-                        clearInterval(iframeCheckInterval);
-                        doRedirect();
-                        return;
-                    }
-                } catch(e2) {}
-
-                // Alternativa: verifica se o iframe aumentou de altura
-                // (a página de confirmação do Calendly é mais curta que o selector)
-                try {
-                    var h = iframe.offsetHeight || iframe.clientHeight;
-                    if (h > 0 && h < 400 && window._calendlyOrigHeight && window._calendlyOrigHeight > 500) {
-                        clearInterval(iframeCheckInterval);
-                        doRedirect();
-                        return;
-                    }
-                    if (h > 200) window._calendlyOrigHeight = h;
-                } catch(e3) {}
-            }, 800);
-        }
-
-        // ── Estratégia 3: botão fallback visível ──
-        // Aparece após 90s — garante que a pessoa nunca fica presa
-        function showFallbackAfterDelay() {
-            setTimeout(function() {
-                if (!redirectDone) {
-                    var fb = document.getElementById('calendlyFallback');
-                    if (fb) fb.style.display = 'block';
-                }
-            }, 90000);
-        }
-
-        // Inicia o polling quando o Calendly abre
-        // (chamado dentro de openCalendly())
     </script>
 </body>
 </html>
