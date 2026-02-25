@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protocolo Raiz-17 | Desbloqueie Seu Crescimento Financeiro</title>
+    <title>Webinar Gratuito | O Motivo Inconsciente</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Crimson+Text:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
@@ -30,7 +30,6 @@
             overflow-x: hidden;
         }
 
-        /* Animated Background */
         .bg-pattern {
             position: fixed;
             top: 0;
@@ -58,7 +57,6 @@
             z-index: 10;
         }
 
-        /* Header */
         header {
             text-align: center;
             padding: 60px 0 40px;
@@ -89,7 +87,6 @@
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
         }
 
-        /* Hero Section */
         .hero {
             text-align: center;
             animation: fadeInUp 1s ease-out 0.2s both;
@@ -97,52 +94,61 @@
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 7vw, 4.2rem);
+            font-size: clamp(2rem, 6vw, 3.4rem);
             font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 30px;
+            line-height: 1.15;
+            margin-bottom: 40px;
             background: linear-gradient(135deg, var(--cream) 0%, var(--gold) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 40px rgba(212, 165, 116, 0.3);
         }
 
-        .subtitle {
-            font-size: clamp(1.1rem, 3vw, 1.4rem);
-            line-height: 1.6;
-            color: rgba(245, 241, 232, 0.8);
-            margin-bottom: 40px;
-            font-weight: 400;
-        }
-
-        .highlight {
-            color: var(--gold);
-            font-weight: 600;
-            position: relative;
+        /* CTA Buttons */
+        .cta-button {
             display: inline-block;
-        }
-
-        .highlight::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
             width: 100%;
-            height: 2px;
-            background: var(--gold);
-            animation: expandWidth 0.8s ease-out 1.5s both;
+            max-width: 480px;
+            padding: 22px 40px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--darker);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 30px rgba(212, 165, 116, 0.3);
+            text-decoration: none;
+            text-align: center;
         }
 
-        @keyframes expandWidth {
-            from { width: 0; }
-            to { width: 100%; }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(212, 165, 116, 0.5);
         }
 
-        /* Benefits List */
+        .cta-wrap {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        /* Benefits / Learn Section */
         .benefits {
-            margin: 50px 0;
+            margin: 50px 0 20px;
             animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .benefits-intro {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 24px;
+            text-align: center;
+            letter-spacing: 0.5px;
         }
 
         .benefit-item {
@@ -182,34 +188,78 @@
             color: rgba(245, 241, 232, 0.9);
         }
 
-        /* Form Section */
-        .form-section {
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.08), rgba(212, 165, 116, 0.03));
-            border: 2px solid rgba(212, 165, 116, 0.2);
+        /* Modal Overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 15, 25, 0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(6px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-box {
+            background: linear-gradient(135deg, #1e2d3d, var(--darker));
+            border: 2px solid rgba(212, 165, 116, 0.3);
             border-radius: 20px;
             padding: 50px 40px;
-            margin: 60px 0;
+            width: 100%;
+            max-width: 520px;
             text-align: center;
-            animation: fadeInUp 1s ease-out 0.6s both;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            position: relative;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+            animation: slideUp 0.35s ease;
         }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: rgba(245, 241, 232, 0.5);
+            font-size: 1.6rem;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover { color: var(--gold); }
 
         .form-title {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             color: var(--gold);
         }
 
         .form-subtitle {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: rgba(245, 241, 232, 0.7);
-            margin-bottom: 35px;
+            margin-bottom: 30px;
         }
 
         form {
-            max-width: 480px;
+            max-width: 440px;
             margin: 0 auto;
         }
 
@@ -239,165 +289,13 @@
             transition: all 0.3s ease;
         }
 
+        input::placeholder { color: rgba(245, 241, 232, 0.3); }
+
         input:focus {
             outline: none;
             border-color: var(--gold);
-            background: rgba(245, 241, 232, 0.1);
+            background: rgba(245, 241, 232, 0.08);
             box-shadow: 0 0 0 4px rgba(212, 165, 116, 0.1);
-        }
-
-        input::placeholder {
-            color: rgba(245, 241, 232, 0.3);
-        }
-
-        .cta-button {
-            width: 100%;
-            padding: 20px 40px;
-            font-size: 1.3rem;
-            font-weight: 700;
-            font-family: 'Playfair Display', serif;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--darker);
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 10px;
-            box-shadow: 0 10px 30px rgba(212, 165, 116, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(212, 165, 116, 0.5);
-        }
-
-        .cta-button:active {
-            transform: translateY(-1px);
-        }
-
-        /* Trust Signals */
-        .trust-signals {
-            margin-top: 40px;
-            animation: fadeInUp 1s ease-out 0.8s both;
-        }
-
-        .trust-text {
-            font-size: 0.95rem;
-            color: rgba(245, 241, 232, 0.5);
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .testimonials {
-            display: grid;
-            gap: 25px;
-            margin-top: 50px;
-        }
-
-        .testimonial {
-            background: rgba(212, 165, 116, 0.04);
-            border: 1px solid rgba(212, 165, 116, 0.15);
-            border-radius: 15px;
-            padding: 30px;
-            transition: all 0.3s ease;
-        }
-
-        .testimonial:hover {
-            background: rgba(212, 165, 116, 0.08);
-            border-color: rgba(212, 165, 116, 0.3);
-        }
-
-        .testimonial-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .avatar-placeholder {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: var(--darker);
-            font-size: 1.2rem;
-        }
-
-        .testimonial-author {
-            flex: 1;
-        }
-
-        .author-name {
-            font-weight: 700;
-            color: var(--gold);
-            font-size: 1.1rem;
-            margin-bottom: 3px;
-        }
-
-        .author-title {
-            font-size: 0.9rem;
-            color: rgba(245, 241, 232, 0.5);
-        }
-
-        .testimonial-text {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: rgba(245, 241, 232, 0.8);
-            font-style: italic;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 60px 20px 40px;
-            color: rgba(245, 241, 232, 0.4);
-            font-size: 0.9rem;
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .phone-row {
@@ -437,23 +335,56 @@
             color: var(--cream);
         }
 
-        .phone-row input {
-            flex: 1;
+        .phone-row input { flex: 1; }
+
+        .submit-btn {
+            width: 100%;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--darker);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 8px 30px rgba(212, 165, 116, 0.3);
         }
 
-        /* Responsive */
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(212, 165, 116, 0.5);
+        }
+
+        .trust-text {
+            margin-top: 18px;
+            font-size: 0.9rem;
+            color: rgba(245, 241, 232, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 20px 40px;
+            color: rgba(245, 241, 232, 0.4);
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            .form-section {
-                padding: 35px 25px;
-            }
-
-            .benefit-item {
-                padding: 15px;
-            }
+            .container { padding: 15px; }
+            .modal-box { padding: 35px 22px; }
+            .benefit-item { padding: 15px; }
         }
     </style>
 </head>
@@ -464,36 +395,54 @@
         <header>
             <div class="logo-badge">
                 <div class="shield-icon"></div>
-                Protocolo Raiz-17
+                O webinar 100% gratuito que revela
             </div>
         </header>
 
         <section class="hero">
-            <h1>Se já provaste que sabes ganhar dinheiro, porque é que estás preso nos mesmos números?</h1>
-            
-            <p class="subtitle">
-                Em apenas <span class="highlight">17 dias</span>, vais identificar o bloqueio interno invisível que está a travar o teu crescimento financeiro — e perceber porque é que, mesmo quando o dinheiro entra, a realização e as relações continuam a falhar.
-            </p>
+            <h1>O motivo inconsciente pelo qual empreendedores que trabalham +10h por dia não conseguem ultrapassar os 15.000€ por mês</h1>
+
+            <div class="cta-wrap">
+                <button class="cta-button" onclick="openModal()">
+                    Aula disponível para assistir agora →
+                </button>
+            </div>
         </section>
 
         <section class="benefits">
+            <p class="benefits-intro">Vais aprender:</p>
+
             <div class="benefit-item">
                 <div class="check-icon">✓</div>
-                <p class="benefit-text">Descobre o verdadeiro motivo pelo qual bates num teto e voltas atrás</p>
+                <p class="benefit-text">Porque até já ganhaste dinheiro, mas hoje estás abaixo daquilo que sabes que és capaz</p>
             </div>
             <div class="benefit-item">
                 <div class="check-icon">✓</div>
-                <p class="benefit-text">Identifica o padrão interno que sabota decisões, execução e relações</p>
+                <p class="benefit-text">A atingir o próximo objetivo de forma natural, sem parecer que estás a empurrar resultados à força</p>
             </div>
             <div class="benefit-item">
                 <div class="check-icon">✓</div>
-                <p class="benefit-text">Ganha clareza total sobre o próximo passo certo, antes de investires mais</p>
+                <p class="benefit-text">Como deixares de te comparares silenciosamente e acabar com o modo de estar no mesmo patamar daqui a 6 meses — só desta forma o negócio e as relações vão começar a andar</p>
             </div>
         </section>
 
-        <section class="form-section">
-            <h2 class="form-title">Quero Desbloquear o Meu Próximo Nível</h2>
-            <p class="form-subtitle">Insere os teus dados para acederes ao vídeo exclusivo</p>
+        <div class="cta-wrap" style="margin-bottom: 60px;">
+            <button class="cta-button" onclick="openModal()">
+                Assistir agora mesmo →
+            </button>
+        </div>
+
+        <footer>
+            <p>© 2026 Helder Lages • Todos os direitos reservados</p>
+        </footer>
+    </div>
+
+    <!-- Modal Form -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <h2 class="form-title">Quero Assistir Agora</h2>
+            <p class="form-subtitle">Insere os teus dados para acederes à aula</p>
             
             <form id="optinForm" action="2-vsl.html" method="GET">
                 <div class="form-group">
@@ -511,8 +460,8 @@
                     <div class="phone-row">
                         <select id="ddi" name="ddi" class="ddd-select" required>
                             <option value="" disabled selected>DDI</option>
-                            <option value="+55">🇧🇷 +55 – Brasil</option>
                             <option value="+351">🇵🇹 +351 – Portugal</option>
+                            <option value="+55">🇧🇷 +55 – Brasil</option>
                             <option value="+1">🇺🇸 +1 – EUA / Canadá</option>
                             <option value="+44">🇬🇧 +44 – Reino Unido</option>
                             <option value="+34">🇪🇸 +34 – Espanha</option>
@@ -541,42 +490,50 @@
                             <option value="+971">🇦🇪 +971 – Emirados Árabes</option>
                             <option value="+7">🇷🇺 +7 – Rússia</option>
                         </select>
-                        <input type="tel" id="phone" name="phone" placeholder="9 0000-0000" required>
+                        <input type="tel" id="phone" name="phone" placeholder="912 345 678" required>
                     </div>
                 </div>
                 
-                <button type="submit" class="cta-button">
-                    Aceder Agora →
+                <button type="submit" class="submit-btn">
+                    Assistir Agora →
                 </button>
             </form>
             
             <p class="trust-text">🔒 Os teus dados estão seguros. Respeitamos a tua privacidade.</p>
-        </section>
-
-
-
-        <footer>
-            <p>© 2026 Helder Lages • Todos os direitos reservados</p>
-        </footer>
+        </div>
     </div>
 
     <script>
-        // Phone number formatting
-        document.getElementById('phone').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length <= 9) {
-                value = value.replace(/(\d{1})(\d{4})(\d{0,4})/, '$1 $2-$3');
-            }
-            e.target.value = value;
+        function openModal() {
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on overlay click
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
         });
 
-        // Smooth form submission
+        // Phone number formatting: groups of 3 digits separated by spaces
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            // Format in groups of 3: e.g. 912 345 678
+            let formatted = value.match(/.{1,3}/g);
+            e.target.value = formatted ? formatted.join(' ') : '';
+        });
+
+        // Form submission
         document.getElementById('optinForm').addEventListener('submit', function(e) {
-            const button = this.querySelector('.cta-button');
+            const button = this.querySelector('.submit-btn');
             button.textContent = 'A carregar...';
         });
 
-        // Add subtle parallax effect on scroll
+        // Parallax
         window.addEventListener('scroll', function() {
             const scrolled = window.pageYOffset;
             const pattern = document.querySelector('.bg-pattern');
