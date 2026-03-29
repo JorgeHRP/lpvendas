@@ -751,7 +751,8 @@
 
                 let fakePct = 0, rafId = null, lastRafTime = null;
                 let ctaShown = false, calendlyLoaded = false, isPlaying = false;
-                let vidCurrentTime = 0, vidDuration = 0;
+                let vidCurrentTime = 0, vidDuration = 1047; // 17min27s
+                let elapsedSeconds = 0, playStartTime = null;
 
                 function bPost(cmd, extra) {
                     const frame = document.getElementById('mainVideo');
@@ -768,15 +769,27 @@
                     if (!isPlaying) { rafId = null; return; }
                     const delta = lastRafTime ? (ts - lastRafTime) / 1000 : 0.016;
                     lastRafTime = ts;
-                    const dur = vidDuration || 60;
+                    const dur = vidDuration || 1047;
                     fakePct = Math.min(0.998, fakePct + (delta / dur) * getFakeRate(fakePct));
                     document.getElementById('vslProgressFill').style.width = (fakePct * 100) + '%';
-                    if (!ctaShown && vidCurrentTime >= CTA_TRIGGER_SECONDS) showCTA();
+                    // CTA baseado no tempo real decorrido desde o início
+                    const realElapsed = elapsedSeconds + (playStartTime ? (Date.now() - playStartTime) / 1000 : 0);
+                    if (!ctaShown && realElapsed >= CTA_TRIGGER_SECONDS) showCTA();
                     rafId = requestAnimationFrame(rafTick);
                 }
 
-                function startRaf() { if (rafId) return; lastRafTime = null; rafId = requestAnimationFrame(rafTick); }
-                function stopRaf()  { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } lastRafTime = null; }
+                function startRaf() {
+                    if (rafId) return;
+                    lastRafTime = null;
+                    if (!playStartTime) playStartTime = Date.now();
+                    rafId = requestAnimationFrame(rafTick);
+                }
+                function stopRaf() {
+                    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+                    lastRafTime = null;
+                    // Guarda tempo decorrido ao pausar
+                    if (playStartTime) { elapsedSeconds += (Date.now() - playStartTime) / 1000; playStartTime = null; }
+                }
 
                 function showCTA() {
                     ctaShown = true;
@@ -818,11 +831,21 @@
                     document.getElementById('soundBtn').style.display = 'none';
                     fakePct = 0;
                     vidCurrentTime = 0;
+                    vidDuration = 1047;
+                    elapsedSeconds = 0;
+                    playStartTime = null;
                     document.getElementById('vslProgressFill').style.width = '0%';
                     stopRaf();
+                    isPlaying = false;
                     // Recarrega iframe com autoplay e sem mute
                     const frame = document.getElementById('mainVideo');
                     frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=false&loop=false&preload=true&responsive=true&controls=false';
+                    // Reinicia barra após o iframe carregar
+                    frame.onload = function() {
+                        isPlaying = true;
+                        startRaf();
+                        frame.onload = null;
+                    };
                 }
 
                 window.addEventListener('load', function () {
