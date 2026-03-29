@@ -2,7 +2,9 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Aula Gratuita | Diagnóstico de Rota</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,6 +71,7 @@
             font-weight: 600;
             text-transform: uppercase;
             color: var(--gold);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
         }
 
@@ -95,8 +98,9 @@
             margin-bottom: 20px;
             background: linear-gradient(135deg, var(--cream) 0%, var(--gold) 100%);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: var(--cream); /* fallback para browsers sem suporte */
         }
 
         .vsl-subtitle {
@@ -263,6 +267,13 @@
         .booking-button:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 50px rgba(212, 165, 116, 0.6);
+        }
+        .booking-button:active {
+            transform: translateY(-2px);
+        }
+        .booking-button {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
         .guarantee {
@@ -474,16 +485,15 @@
         /* ── Play overlay ── */
         #playOverlay {
             position: absolute;
-            inset: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 16px;
-            z-index: 60;
+            z-index: 10;
             background: rgba(0,0,0,0.35);
             transition: opacity 0.3s ease;
-            -webkit-tap-highlight-color: transparent;
         }
         #playOverlay.hidden { opacity: 0; pointer-events: none; }
 
@@ -506,6 +516,10 @@
         .vsl-wrapper:hover .play-circle {
             transform: scale(1.08);
         }
+        .vsl-wrapper:active .play-circle {
+            transform: scale(0.96);
+        }
+        .play-circle { -webkit-tap-highlight-color: transparent; }
         .play-circle svg { width: 36px; height: 36px; fill: var(--darker); margin-left: 5px; }
 
         .play-label {
@@ -521,7 +535,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 70;
+            z-index: 20;
             display: none;
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
             color: var(--darker);
@@ -545,6 +559,8 @@
             50%      { box-shadow: 0 14px 55px rgba(212,165,116,0.75), 0 0 0 12px rgba(212,165,116,0.08); }
         }
         #soundBtn:hover { transform: translate(-50%,-50%) scale(1.06); }
+        #soundBtn:active { transform: translate(-50%,-50%) scale(0.97); }
+        #soundBtn { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 
         /* ── VSL progress bar (stuck to bottom of video) ── */
         #vslProgressTrack {
@@ -615,6 +631,8 @@
         }
         #scheduleCta:hover::before { left: 100%; }
         #scheduleCta:hover { transform: translateY(-4px); box-shadow: 0 20px 55px rgba(212,165,116,0.6); }
+        #scheduleCta:active { transform: translateY(-1px); }
+        #scheduleCta { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 
         /* ── Calendly Section ── */
         #calendlySection {
@@ -642,6 +660,12 @@
             min-height: 550px !important;
             max-height: 900px !important;
         }
+        /* iOS Safari fix: usa window.innerHeight em vez de 100vh que pode ser incorreto */
+        @supports (-webkit-touch-callout: none) {
+            .calendly-inline-widget {
+                min-height: 600px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -663,8 +687,8 @@
                 <div class="vsl-aspect">
                     <iframe id="mainVideo"
                         src="https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=true&loop=false&preload=true&responsive=true&controls=false"
-                        style="position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;"
-                        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;pointer-events:none;"
+                        allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;fullscreen"
                         allowfullscreen="true"
                         playsinline
                         webkit-playsinline>
@@ -679,7 +703,7 @@
                     </div>
 
                     <!-- Camada de clique (bloqueia iframe até primeiro clique) -->
-                    <div id="clickLayer" style="position:absolute;inset:0;z-index:50;cursor:pointer;-webkit-tap-highlight-color:transparent;"></div>
+                    <div id="clickLayer" style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:8;cursor:pointer;-webkit-tap-highlight-color:transparent;"></div>
 
                     <!-- Botão Ativar Som (aparece após primeiro play) -->
                     <button id="soundBtn" onclick="activateSound()">
@@ -794,6 +818,15 @@
                     if (playStartTime) { elapsedSeconds += (Date.now() - playStartTime) / 1000; playStartTime = null; }
                 }
 
+                function smoothScrollTo(el, block) {
+                    if (!el) return;
+                    try {
+                        el.scrollIntoView({ behavior: 'smooth', block: block || 'center' });
+                    } catch(e) {
+                        el.scrollIntoView(false);
+                    }
+                }
+
                 function showCTA() {
                     ctaShown = true;
                     const title    = document.getElementById('vslTitle');
@@ -802,7 +835,7 @@
                     if (subtitle) { subtitle.style.display = 'block'; subtitle.style.animation = 'fadeInUp 0.7s ease-out 0.15s both'; }
                     const el = document.getElementById('scheduleCtaWrapper');
                     el.style.display = 'block';
-                    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
+                    setTimeout(() => smoothScrollTo(el, 'center'), 300);
                 }
 
                 function openCalendly() {
@@ -824,14 +857,16 @@
                         document.head.appendChild(s);
                         calendlyLoaded = true;
                     }
-                    setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+                    setTimeout(() => smoothScrollTo(section, 'start'), 150);
                     showFallbackAfterDelay();
                     setTimeout(startIframePolling, 3000);
                 }
 
                 // ── Clique no botão de som: reinicia com som ──────────────
                 function activateSound() {
-                    document.getElementById('soundBtn').style.display = 'none';
+                    const soundBtn = document.getElementById('soundBtn');
+                    soundBtn.style.display = 'none';
+                    soundBtn.dataset.dismissed = '1';
                     fakePct = 0;
                     vidCurrentTime = 0;
                     vidDuration = 1047;
@@ -842,6 +877,8 @@
                     isPlaying = false;
                     // Recarrega iframe com autoplay e sem mute
                     const frame = document.getElementById('mainVideo');
+                    // Dá pointer-events ao iframe para garantir que o toque do utilizador "conta" para o autoplay
+                    frame.style.pointerEvents = 'auto';
                     frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=false&loop=false&preload=true&responsive=true&controls=false';
                     // Reinicia barra após o iframe carregar
                     frame.onload = function() {
@@ -856,46 +893,34 @@
                     const clickLayer = document.getElementById('clickLayer');
                     const soundBtn   = document.getElementById('soundBtn');
 
-                    // Deteta iOS/Safari — não suporta autoplay de iframes
-                    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-                    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-                    const needsManualPlay = isIOS || isSafari;
+                    // Detecta iOS/Safari
+                    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                    var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+                    var needsUserGesture = isIOS || isSafari;
 
-                    if (needsManualPlay) {
-                        // iOS: mantém overlay visível, espera o utilizador tocar
+                    if (needsUserGesture) {
+                        // iOS: não pode autoplay iframe cross-origin — mostra overlay e aguarda toque
                         overlay.classList.remove('hidden');
                         clickLayer.style.display = 'block';
-
-                        function handleFirstTap(e) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            const frame = document.getElementById('mainVideo');
-                            // Recarrega o iframe com autoplay muted — com gesto do utilizador o iOS aceita
-                            frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=true&loop=false&preload=true&responsive=true&controls=false';
+                        // Ao clicar no overlay ou na camada de clique, deixa o iframe receber interação
+                        function handleFirstTap() {
                             overlay.classList.add('hidden');
                             clickLayer.style.display = 'none';
+                            // Dá ao iframe pointer-events para o utilizador poder interagir
+                            document.getElementById('mainVideo').style.pointerEvents = 'auto';
                             isPlaying = true;
                             startRaf();
-                            // Mostra botão de som após 1.5s, igual ao desktop
-                            frame.onload = function() {
-                                isPlaying = true;
-                                startRaf();
-                                setTimeout(() => { soundBtn.style.display = 'flex'; }, 1500);
-                                frame.onload = null;
-                            };
-                            clickLayer.removeEventListener('touchstart', handleFirstTap);
-                            clickLayer.removeEventListener('click', handleFirstTap);
-                            overlay.removeEventListener('touchstart', handleFirstTap);
-                            overlay.removeEventListener('click', handleFirstTap);
+                            // No iOS com muted em iframe pode ainda não tocar — mostra botão de som após 2s
+                            setTimeout(function() {
+                                if (!document.getElementById('soundBtn').dataset.dismissed) {
+                                    soundBtn.style.display = 'flex';
+                                }
+                            }, 2000);
                         }
-
-                        // touchstart é mais fiável no iOS que click para interceptar antes do iframe
-                        clickLayer.addEventListener('touchstart', handleFirstTap, { passive: false });
-                        clickLayer.addEventListener('click', handleFirstTap);
-                        overlay.addEventListener('touchstart', handleFirstTap, { passive: false });
-                        overlay.addEventListener('click', handleFirstTap);
+                        overlay.addEventListener('click', handleFirstTap, { once: true });
+                        clickLayer.addEventListener('click', handleFirstTap, { once: true });
                     } else {
-                        // Desktop/Android: esconde overlay — vídeo já está em autoplay muted
+                        // Chrome/outros: autoplay muted funciona — esconde overlay imediatamente
                         overlay.classList.add('hidden');
                         clickLayer.style.display = 'none';
                         isPlaying = true;
@@ -918,8 +943,11 @@
                         if (evt === 'play' || evt === 'playing') {
                             isPlaying = true;
                             startRaf();
-                            // Se tocou com som, esconde o botão de som
-                            if (!data.muted) soundBtn.style.display = 'none';
+                            // Se tocou com som, esconde o botão
+                            if (!data.muted) {
+                                soundBtn.style.display = 'none';
+                                soundBtn.dataset.dismissed = '1';
+                            }
                         }
                         if (evt === 'pause') { isPlaying = false; stopRaf(); }
                         if (evt === 'ended' || evt === 'finish') {
@@ -954,7 +982,11 @@
 
         // Smooth scroll on load
         window.addEventListener('load', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            try {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch(e) {
+                window.scrollTo(0, 0);
+            }
         });
 
         // ═══════════════════════════════════════════════════════
