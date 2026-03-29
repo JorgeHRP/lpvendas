@@ -862,9 +862,9 @@
                     setTimeout(startIframePolling, 3000);
                 }
 
-                // ── Clique no botão de som: reinicia com som ──────────────
+                // ── Botão de Som: reinicia com som (fluxo idêntico iOS e Android) ──
                 function activateSound() {
-                    const soundBtn = document.getElementById('soundBtn');
+                    var soundBtn = document.getElementById('soundBtn');
                     soundBtn.style.display = 'none';
                     soundBtn.dataset.dismissed = '1';
                     fakePct = 0;
@@ -875,16 +875,16 @@
                     document.getElementById('vslProgressFill').style.width = '0%';
                     stopRaf();
                     isPlaying = false;
-                    // Recarrega iframe com autoplay e sem mute
-                    const frame = document.getElementById('mainVideo');
-                    // Dá pointer-events ao iframe para garantir que o toque do utilizador "conta" para o autoplay
-                    frame.style.pointerEvents = 'auto';
-                    frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=false&loop=false&preload=true&responsive=true&controls=false';
-                    // Reinicia barra após o iframe carregar
+                    // Recarrega iframe com autoplay sem mute.
+                    // pointer-events mantém-se none — o utilizador não interage com o player nativo.
+                    // Usamos um param ts= para forçar reload mesmo que o src seja igual.
+                    var frame = document.getElementById('mainVideo');
+                    var ts = Date.now();
+                    frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=false&loop=false&preload=true&responsive=true&controls=false&_t=' + ts;
                     frame.onload = function() {
+                        frame.onload = null;
                         isPlaying = true;
                         startRaf();
-                        frame.onload = null;
                     };
                 }
 
@@ -892,58 +892,67 @@
                     const overlay    = document.getElementById('playOverlay');
                     const clickLayer = document.getElementById('clickLayer');
                     const soundBtn   = document.getElementById('soundBtn');
+                    const frame      = document.getElementById('mainVideo');
 
-                    // Detecta iOS/Safari
+                    // Detecta iOS
                     var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-                    var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-                    var needsUserGesture = isIOS || isSafari;
 
-                    if (needsUserGesture) {
-                        // iOS: não pode autoplay iframe cross-origin — mostra overlay e aguarda toque
+                    if (isIOS) {
+                        // ── iOS: autoplay muted em iframe cross-origin só funciona com gesto do utilizador ──
+                        // Mostramos o overlay. No toque, recarregamos o src com autoplay+muted
+                        // (o gesto do utilizador "passa" para o iframe nesse momento).
+                        // O iframe mantém pointer-events:none para não aparecerem controlos nativos.
                         overlay.classList.remove('hidden');
                         clickLayer.style.display = 'block';
-                        // Ao clicar no overlay ou na camada de clique, deixa o iframe receber interação
-                        function handleFirstTap() {
+
+                        var iosTapped = false;
+                        function handleIOSTap(e) {
+                            if (iosTapped) return;
+                            iosTapped = true;
+                            // Esconde overlay
                             overlay.classList.add('hidden');
                             clickLayer.style.display = 'none';
-                            // Dá ao iframe pointer-events para o utilizador poder interagir
-                            document.getElementById('mainVideo').style.pointerEvents = 'auto';
-                            isPlaying = true;
-                            startRaf();
-                            // No iOS com muted em iframe pode ainda não tocar — mostra botão de som após 2s
-                            setTimeout(function() {
-                                if (!document.getElementById('soundBtn').dataset.dismissed) {
-                                    soundBtn.style.display = 'flex';
-                                }
-                            }, 2000);
+                            // Recarrega src com autoplay+muted — desta vez dentro do gesto do utilizador
+                            frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=true&loop=false&preload=true&responsive=true&controls=false';
+                            frame.onload = function() {
+                                frame.onload = null;
+                                isPlaying = true;
+                                startRaf();
+                                // Mostra botão de som após 1.5s — fluxo idêntico ao Android
+                                setTimeout(function() {
+                                    if (!soundBtn.dataset.dismissed) {
+                                        soundBtn.style.display = 'flex';
+                                    }
+                                }, 1500);
+                            };
                         }
-                        overlay.addEventListener('click', handleFirstTap, { once: true });
-                        clickLayer.addEventListener('click', handleFirstTap, { once: true });
+                        overlay.addEventListener('click',     handleIOSTap, { once: true });
+                        overlay.addEventListener('touchstart', handleIOSTap, { once: true, passive: true });
+                        clickLayer.addEventListener('click',     handleIOSTap, { once: true });
+                        clickLayer.addEventListener('touchstart', handleIOSTap, { once: true, passive: true });
+
                     } else {
-                        // Chrome/outros: autoplay muted funciona — esconde overlay imediatamente
+                        // ── Android/Chrome: autoplay muted funciona direto — fluxo original ──
                         overlay.classList.add('hidden');
                         clickLayer.style.display = 'none';
                         isPlaying = true;
                         startRaf();
-                        // Mostra botão de som após 1.5s
-                        setTimeout(() => { soundBtn.style.display = 'flex'; }, 1500);
+                        setTimeout(function() { soundBtn.style.display = 'flex'; }, 1500);
                     }
 
-                    // ── Eventos postMessage do Bunny ──────────────────────
+                    // ── Eventos postMessage do Bunny (funciona em ambos) ──
                     window.addEventListener('message', function (e) {
-                        let data;
+                        var data;
                         try { data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; }
                         catch(err) { return; }
                         if (!data || typeof data !== 'object') return;
-                        // Ignora mensagens do Calendly
                         if (data.event && String(data.event).indexOf('calendly') !== -1) return;
 
-                        const evt = String(data.event || data.type || '').toLowerCase();
+                        var evt = String(data.event || data.type || '').toLowerCase();
 
                         if (evt === 'play' || evt === 'playing') {
                             isPlaying = true;
                             startRaf();
-                            // Se tocou com som, esconde o botão
                             if (!data.muted) {
                                 soundBtn.style.display = 'none';
                                 soundBtn.dataset.dismissed = '1';
