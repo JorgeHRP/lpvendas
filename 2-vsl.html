@@ -875,17 +875,33 @@
                     document.getElementById('vslProgressFill').style.width = '0%';
                     stopRaf();
                     isPlaying = false;
-                    // Recarrega iframe com autoplay sem mute.
-                    // pointer-events mantém-se none — o utilizador não interage com o player nativo.
-                    // Usamos um param ts= para forçar reload mesmo que o src seja igual.
+
                     var frame = document.getElementById('mainVideo');
-                    var ts = Date.now();
-                    frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=false&loop=false&preload=true&responsive=true&controls=false&_t=' + ts;
-                    frame.onload = function() {
-                        frame.onload = null;
-                        isPlaying = true;
-                        startRaf();
-                    };
+                    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+                    if (isIOS) {
+                        // iOS: abre pointer-events brevemente para o gesto chegar ao iframe
+                        // antes do reload com som
+                        frame.style.pointerEvents = 'auto';
+                        setTimeout(function() {
+                            var ts = Date.now();
+                            frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=false&loop=false&preload=true&responsive=true&controls=false&_t=' + ts;
+                            setTimeout(function() {
+                                frame.style.pointerEvents = 'none';
+                                isPlaying = true;
+                                startRaf();
+                            }, 500);
+                        }, 50);
+                    } else {
+                        // Android/Chrome: reload direto sem mute
+                        var ts = Date.now();
+                        frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=false&loop=false&preload=true&responsive=true&controls=false&_t=' + ts;
+                        frame.onload = function() {
+                            frame.onload = null;
+                            isPlaying = true;
+                            startRaf();
+                        };
+                    }
                 }
 
                 window.addEventListener('load', function () {
@@ -898,10 +914,10 @@
                     var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
                     if (isIOS) {
-                        // ── iOS: autoplay muted em iframe cross-origin só funciona com gesto do utilizador ──
-                        // Mostramos o overlay. No toque, recarregamos o src com autoplay+muted
-                        // (o gesto do utilizador "passa" para o iframe nesse momento).
-                        // O iframe mantém pointer-events:none para não aparecerem controlos nativos.
+                        // ── iOS: Safari só arranca autoplay em iframe com gesto direto do utilizador.
+                        // No toque: abrimos pointer-events no iframe por 500ms para o gesto
+                        // chegar ao player Bunny e disparar o autoplay+muted interno.
+                        // Depois voltamos a none para bloquear controlos nativos.
                         overlay.classList.remove('hidden');
                         clickLayer.style.display = 'block';
 
@@ -909,27 +925,32 @@
                         function handleIOSTap(e) {
                             if (iosTapped) return;
                             iosTapped = true;
-                            // Esconde overlay
+
+                            // Esconde overlay e clickLayer
                             overlay.classList.add('hidden');
                             clickLayer.style.display = 'none';
-                            // Recarrega src com autoplay+muted — desta vez dentro do gesto do utilizador
-                            frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=true&loop=false&preload=true&responsive=true&controls=false';
-                            frame.onload = function() {
-                                frame.onload = null;
-                                isPlaying = true;
-                                startRaf();
-                                // Mostra botão de som após 1.5s — fluxo idêntico ao Android
-                                setTimeout(function() {
-                                    if (!soundBtn.dataset.dismissed) {
-                                        soundBtn.style.display = 'flex';
-                                    }
-                                }, 1500);
-                            };
+
+                            // Passa o gesto ao iframe brevemente
+                            frame.style.pointerEvents = 'auto';
+                            setTimeout(function() {
+                                frame.style.pointerEvents = 'none';
+                            }, 500);
+
+                            // Arranca barra de progresso imediatamente
+                            isPlaying = true;
+                            startRaf();
+
+                            // Botão de som após 1.5s — igual ao Android
+                            setTimeout(function() {
+                                if (!soundBtn.dataset.dismissed) {
+                                    soundBtn.style.display = 'flex';
+                                }
+                            }, 1500);
                         }
                         overlay.addEventListener('click',     handleIOSTap, { once: true });
-                        overlay.addEventListener('touchstart', handleIOSTap, { once: true, passive: true });
-                        clickLayer.addEventListener('click',     handleIOSTap, { once: true });
-                        clickLayer.addEventListener('touchstart', handleIOSTap, { once: true, passive: true });
+                        overlay.addEventListener('touchend',  handleIOSTap, { once: true, passive: true });
+                        clickLayer.addEventListener('click',  handleIOSTap, { once: true });
+                        clickLayer.addEventListener('touchend', handleIOSTap, { once: true, passive: true });
 
                     } else {
                         // ── Android/Chrome: autoplay muted funciona direto — fluxo original ──
