@@ -862,7 +862,7 @@
                     setTimeout(startIframePolling, 3000);
                 }
 
-                // ── Botão de Som: reinicia com som (fluxo idêntico iOS e Android) ──
+                // ── Botão de Som ──
                 function activateSound() {
                     var soundBtn = document.getElementById('soundBtn');
                     soundBtn.style.display = 'none';
@@ -878,82 +878,62 @@
 
                     var frame = document.getElementById('mainVideo');
                     var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                    var ts = Date.now();
 
-                    if (isIOS) {
-                        // iOS: abre pointer-events brevemente para o gesto chegar ao iframe
-                        // antes do reload com som
-                        frame.style.pointerEvents = 'auto';
-                        setTimeout(function() {
-                            var ts = Date.now();
-                            frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=false&loop=false&preload=true&responsive=true&controls=false&_t=' + ts;
-                            setTimeout(function() {
-                                frame.style.pointerEvents = 'none';
-                                isPlaying = true;
-                                startRaf();
-                            }, 500);
-                        }, 50);
-                    } else {
-                        // Android/Chrome: reload direto sem mute
-                        var ts = Date.now();
-                        frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=false&loop=false&preload=true&responsive=true&controls=false&_t=' + ts;
-                        frame.onload = function() {
-                            frame.onload = null;
-                            isPlaying = true;
-                            startRaf();
-                        };
-                    }
+                    // Este clique É um gesto do utilizador — o reload com muted=false funciona em ambos
+                    frame.style.pointerEvents = 'auto';
+                    frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=false&loop=false&preload=true&responsive=true&controls=false&_t=' + ts;
+                    frame.onload = function() {
+                        frame.onload = null;
+                        if (isIOS) {
+                            // Fecha controlos nativos assim que o vídeo arranca
+                            setTimeout(function() { frame.style.pointerEvents = 'none'; }, 800);
+                        } else {
+                            frame.style.pointerEvents = 'none';
+                        }
+                        isPlaying = true;
+                        startRaf();
+                    };
                 }
 
                 window.addEventListener('load', function () {
-                    const overlay    = document.getElementById('playOverlay');
-                    const clickLayer = document.getElementById('clickLayer');
-                    const soundBtn   = document.getElementById('soundBtn');
-                    const frame      = document.getElementById('mainVideo');
+                    var overlay    = document.getElementById('playOverlay');
+                    var clickLayer = document.getElementById('clickLayer');
+                    var soundBtn   = document.getElementById('soundBtn');
+                    var frame      = document.getElementById('mainVideo');
 
-                    // Detecta iOS
                     var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
                     if (isIOS) {
-                        // ── iOS: Safari só arranca autoplay em iframe com gesto direto do utilizador.
-                        // No toque: abrimos pointer-events no iframe por 500ms para o gesto
-                        // chegar ao player Bunny e disparar o autoplay+muted interno.
-                        // Depois voltamos a none para bloquear controlos nativos.
+                        // ── iOS: usamos o embed padrão do Bunny (com controlos nativos visíveis).
+                        // O overlay cobre tudo inicialmente. O utilizador toca no overlay —
+                        // nós escondemos overlay+clickLayer e o iframe fica totalmente acessível.
+                        // O Bunny toca muted com os seus próprios controlos.
+                        // Quando recebemos postMessage 'play', bloqueamos pointer-events
+                        // e mostramos o nosso botão de som.
                         overlay.classList.remove('hidden');
                         clickLayer.style.display = 'block';
 
+                        // Troca src para versão sem controls=false (Bunny mostra play nativo)
+                        frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&loop=false&muted=true&preload=true&responsive=true';
+                        frame.style.pointerEvents = 'none'; // bloqueado até ao toque
+
                         var iosTapped = false;
-                        function handleIOSTap(e) {
+                        function handleIOSTap() {
                             if (iosTapped) return;
                             iosTapped = true;
-
-                            // Esconde overlay e clickLayer
                             overlay.classList.add('hidden');
                             clickLayer.style.display = 'none';
-
-                            // Passa o gesto ao iframe brevemente
+                            // Liberta o iframe para o utilizador interagir com o play nativo do Bunny
                             frame.style.pointerEvents = 'auto';
-                            setTimeout(function() {
-                                frame.style.pointerEvents = 'none';
-                            }, 500);
-
-                            // Arranca barra de progresso imediatamente
-                            isPlaying = true;
-                            startRaf();
-
-                            // Botão de som após 1.5s — igual ao Android
-                            setTimeout(function() {
-                                if (!soundBtn.dataset.dismissed) {
-                                    soundBtn.style.display = 'flex';
-                                }
-                            }, 1500);
                         }
-                        overlay.addEventListener('click',     handleIOSTap, { once: true });
-                        overlay.addEventListener('touchend',  handleIOSTap, { once: true, passive: true });
-                        clickLayer.addEventListener('click',  handleIOSTap, { once: true });
+                        overlay.addEventListener('click',    handleIOSTap, { once: true });
+                        overlay.addEventListener('touchend', handleIOSTap, { once: true, passive: true });
+                        clickLayer.addEventListener('click',    handleIOSTap, { once: true });
                         clickLayer.addEventListener('touchend', handleIOSTap, { once: true, passive: true });
 
                     } else {
-                        // ── Android/Chrome: autoplay muted funciona direto — fluxo original ──
+                        // ── Android/Chrome: autoplay muted direto, sem overlay ──
                         overlay.classList.add('hidden');
                         clickLayer.style.display = 'none';
                         isPlaying = true;
@@ -961,7 +941,7 @@
                         setTimeout(function() { soundBtn.style.display = 'flex'; }, 1500);
                     }
 
-                    // ── Eventos postMessage do Bunny (funciona em ambos) ──
+                    // ── postMessage do Bunny ──
                     window.addEventListener('message', function (e) {
                         var data;
                         try { data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; }
@@ -974,6 +954,13 @@
                         if (evt === 'play' || evt === 'playing') {
                             isPlaying = true;
                             startRaf();
+                            if (isIOS) {
+                                // Vídeo a tocar — agora bloqueia controlos nativos e mostra botão de som
+                                frame.style.pointerEvents = 'none';
+                                if (!soundBtn.dataset.dismissed) {
+                                    setTimeout(function() { soundBtn.style.display = 'flex'; }, 800);
+                                }
+                            }
                             if (!data.muted) {
                                 soundBtn.style.display = 'none';
                                 soundBtn.dataset.dismissed = '1';
