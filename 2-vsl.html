@@ -2,9 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aula Gratuita | Diagnóstico de Rota</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,7 +69,6 @@
             font-weight: 600;
             text-transform: uppercase;
             color: var(--gold);
-            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
         }
 
@@ -98,9 +95,8 @@
             margin-bottom: 20px;
             background: linear-gradient(135deg, var(--cream) 0%, var(--gold) 100%);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: var(--cream); /* fallback para browsers sem suporte */
+            background-clip: text;
         }
 
         .vsl-subtitle {
@@ -267,13 +263,6 @@
         .booking-button:hover {
             transform: translateY(-5px);
             box-shadow: 0 20px 50px rgba(212, 165, 116, 0.6);
-        }
-        .booking-button:active {
-            transform: translateY(-2px);
-        }
-        .booking-button {
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
         }
 
         .guarantee {
@@ -485,7 +474,7 @@
         /* ── Play overlay ── */
         #playOverlay {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            inset: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -516,10 +505,6 @@
         .vsl-wrapper:hover .play-circle {
             transform: scale(1.08);
         }
-        .vsl-wrapper:active .play-circle {
-            transform: scale(0.96);
-        }
-        .play-circle { -webkit-tap-highlight-color: transparent; }
         .play-circle svg { width: 36px; height: 36px; fill: var(--darker); margin-left: 5px; }
 
         .play-label {
@@ -559,8 +544,6 @@
             50%      { box-shadow: 0 14px 55px rgba(212,165,116,0.75), 0 0 0 12px rgba(212,165,116,0.08); }
         }
         #soundBtn:hover { transform: translate(-50%,-50%) scale(1.06); }
-        #soundBtn:active { transform: translate(-50%,-50%) scale(0.97); }
-        #soundBtn { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 
         /* ── VSL progress bar (stuck to bottom of video) ── */
         #vslProgressTrack {
@@ -631,8 +614,6 @@
         }
         #scheduleCta:hover::before { left: 100%; }
         #scheduleCta:hover { transform: translateY(-4px); box-shadow: 0 20px 55px rgba(212,165,116,0.6); }
-        #scheduleCta:active { transform: translateY(-1px); }
-        #scheduleCta { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 
         /* ── Calendly Section ── */
         #calendlySection {
@@ -660,15 +641,106 @@
             min-height: 550px !important;
             max-height: 900px !important;
         }
-        /* iOS Safari fix: usa window.innerHeight em vez de 100vh que pode ser incorreto */
-        @supports (-webkit-touch-callout: none) {
-            .calendly-inline-widget {
-                min-height: 600px !important;
-            }
+
+        /* ══════════════════════════════════════
+           IPHONE OVERLAY
+        ══════════════════════════════════════ */
+        #iphoneOverlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #0d1520;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            padding: 40px 30px;
+        }
+        #iphoneOverlay.active { display: flex; }
+
+        .iphone-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.7;
+        }
+
+        .iphone-headline {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 6vw, 2.2rem);
+            font-weight: 900;
+            text-align: center;
+            line-height: 1.25;
+            color: var(--cream);
+            max-width: 340px;
+        }
+
+        .iphone-headline span {
+            background: linear-gradient(135deg, var(--cream) 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .iphone-btn {
+            width: 100%;
+            max-width: 340px;
+            padding: 28px 20px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--darker);
+            border: none;
+            border-radius: 20px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 15px 50px rgba(212,165,116,0.5), 0 0 0 8px rgba(212,165,116,0.12);
+            animation: iphonePulse 2.2s ease-in-out infinite;
+            -webkit-tap-highlight-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        @keyframes iphonePulse {
+            0%,100% { box-shadow: 0 15px 50px rgba(212,165,116,0.5), 0 0 0 8px rgba(212,165,116,0.12); }
+            50%      { box-shadow: 0 20px 65px rgba(212,165,116,0.7), 0 0 0 16px rgba(212,165,116,0.06); }
+        }
+
+        .iphone-btn svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--darker);
+            flex-shrink: 0;
+        }
+
+        .iphone-note {
+            font-size: 0.85rem;
+            color: rgba(245,241,232,0.35);
+            text-align: center;
+            max-width: 280px;
+            line-height: 1.5;
         }
     </style>
 </head>
 <body>
+    <!-- ══ IPHONE OVERLAY ══ -->
+    <div id="iphoneOverlay">
+        <div class="iphone-logo">Hélder Lages</div>
+        <h1 class="iphone-headline">
+            <span>Assiste à aula gratuita</span><br>agora
+        </h1>
+        <button class="iphone-btn" id="iphonePlayBtn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            ▶ &nbsp;Iniciar Aula
+        </button>
+        <p class="iphone-note">O vídeo abre com som ligado.<br>Certifica-te que o teu telemóvel não está em modo silencioso.</p>
+    </div>
     <div class="bg-gradient"></div>
     
     <div class="container">
@@ -687,11 +759,9 @@
                 <div class="vsl-aspect">
                     <iframe id="mainVideo"
                         src="https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=true&loop=false&preload=true&responsive=true&controls=false"
-                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;pointer-events:none;"
-                        allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;fullscreen"
-                        allowfullscreen="true"
-                        playsinline
-                        webkit-playsinline>
+                        style="position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;"
+                        allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"
+                        allowfullscreen="true">
                     </iframe>
 
                     <!-- Play Overlay -->
@@ -703,7 +773,7 @@
                     </div>
 
                     <!-- Camada de clique (bloqueia iframe até primeiro clique) -->
-                    <div id="clickLayer" style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:8;cursor:pointer;-webkit-tap-highlight-color:transparent;"></div>
+                    <div id="clickLayer" style="position:absolute;inset:0;z-index:8;cursor:pointer;"></div>
 
                     <!-- Botão Ativar Som (aparece após primeiro play) -->
                     <button id="soundBtn" onclick="activateSound()">
@@ -818,15 +888,6 @@
                     if (playStartTime) { elapsedSeconds += (Date.now() - playStartTime) / 1000; playStartTime = null; }
                 }
 
-                function smoothScrollTo(el, block) {
-                    if (!el) return;
-                    try {
-                        el.scrollIntoView({ behavior: 'smooth', block: block || 'center' });
-                    } catch(e) {
-                        el.scrollIntoView(false);
-                    }
-                }
-
                 function showCTA() {
                     ctaShown = true;
                     const title    = document.getElementById('vslTitle');
@@ -835,7 +896,7 @@
                     if (subtitle) { subtitle.style.display = 'block'; subtitle.style.animation = 'fadeInUp 0.7s ease-out 0.15s both'; }
                     const el = document.getElementById('scheduleCtaWrapper');
                     el.style.display = 'block';
-                    setTimeout(() => smoothScrollTo(el, 'center'), 300);
+                    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
                 }
 
                 function openCalendly() {
@@ -857,16 +918,14 @@
                         document.head.appendChild(s);
                         calendlyLoaded = true;
                     }
-                    setTimeout(() => smoothScrollTo(section, 'start'), 150);
+                    setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
                     showFallbackAfterDelay();
                     setTimeout(startIframePolling, 3000);
                 }
 
-                // ── Botão de Som ──
+                // ── Clique no botão de som: reinicia com som ──────────────
                 function activateSound() {
-                    var soundBtn = document.getElementById('soundBtn');
-                    soundBtn.style.display = 'none';
-                    soundBtn.dataset.dismissed = '1';
+                    document.getElementById('soundBtn').style.display = 'none';
                     fakePct = 0;
                     vidCurrentTime = 0;
                     vidDuration = 1047;
@@ -875,96 +934,46 @@
                     document.getElementById('vslProgressFill').style.width = '0%';
                     stopRaf();
                     isPlaying = false;
-
-                    var frame = document.getElementById('mainVideo');
-                    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-                    var ts = Date.now();
-
-                    // Este clique É um gesto do utilizador — o reload com muted=false funciona em ambos
-                    frame.style.pointerEvents = 'auto';
-                    frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=false&loop=false&preload=true&responsive=true&controls=false&_t=' + ts;
+                    // Recarrega iframe com autoplay e sem mute
+                    const frame = document.getElementById('mainVideo');
+                    frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=false&loop=false&preload=true&responsive=true&controls=false';
+                    // Reinicia barra após o iframe carregar
                     frame.onload = function() {
-                        frame.onload = null;
-                        if (isIOS) {
-                            // Fecha controlos nativos assim que o vídeo arranca
-                            setTimeout(function() { frame.style.pointerEvents = 'none'; }, 800);
-                        } else {
-                            frame.style.pointerEvents = 'none';
-                        }
                         isPlaying = true;
                         startRaf();
+                        frame.onload = null;
                     };
                 }
 
                 window.addEventListener('load', function () {
-                    var overlay    = document.getElementById('playOverlay');
-                    var clickLayer = document.getElementById('clickLayer');
-                    var soundBtn   = document.getElementById('soundBtn');
-                    var frame      = document.getElementById('mainVideo');
+                    const overlay    = document.getElementById('playOverlay');
+                    const clickLayer = document.getElementById('clickLayer');
+                    const soundBtn   = document.getElementById('soundBtn');
 
-                    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                    // Esconde overlay e clickLayer — vídeo já está em autoplay muted
+                    overlay.classList.add('hidden');
+                    clickLayer.style.display = 'none';
+                    isPlaying = true;
+                    startRaf();
+                    // Mostra botão de som após 1.5s
+                    setTimeout(() => { soundBtn.style.display = 'flex'; }, 1500);
 
-                    if (isIOS) {
-                        // ── iOS: usamos o embed padrão do Bunny (com controlos nativos visíveis).
-                        // O overlay cobre tudo inicialmente. O utilizador toca no overlay —
-                        // nós escondemos overlay+clickLayer e o iframe fica totalmente acessível.
-                        // O Bunny toca muted com os seus próprios controlos.
-                        // Quando recebemos postMessage 'play', bloqueamos pointer-events
-                        // e mostramos o nosso botão de som.
-                        overlay.classList.remove('hidden');
-                        clickLayer.style.display = 'block';
-
-                        // Troca src para versão sem controls=false (Bunny mostra play nativo)
-                        frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&loop=false&muted=true&preload=true&responsive=true';
-                        frame.style.pointerEvents = 'none'; // bloqueado até ao toque
-
-                        var iosTapped = false;
-                        function handleIOSTap() {
-                            if (iosTapped) return;
-                            iosTapped = true;
-                            overlay.classList.add('hidden');
-                            clickLayer.style.display = 'none';
-                            // Liberta o iframe para o utilizador interagir com o play nativo do Bunny
-                            frame.style.pointerEvents = 'auto';
-                        }
-                        overlay.addEventListener('click',    handleIOSTap, { once: true });
-                        overlay.addEventListener('touchend', handleIOSTap, { once: true, passive: true });
-                        clickLayer.addEventListener('click',    handleIOSTap, { once: true });
-                        clickLayer.addEventListener('touchend', handleIOSTap, { once: true, passive: true });
-
-                    } else {
-                        // ── Android/Chrome: autoplay muted direto, sem overlay ──
-                        overlay.classList.add('hidden');
-                        clickLayer.style.display = 'none';
-                        isPlaying = true;
-                        startRaf();
-                        setTimeout(function() { soundBtn.style.display = 'flex'; }, 1500);
-                    }
-
-                    // ── postMessage do Bunny ──
+                    // ── Eventos postMessage do Bunny ──────────────────────
                     window.addEventListener('message', function (e) {
-                        var data;
+                        let data;
                         try { data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; }
                         catch(err) { return; }
                         if (!data || typeof data !== 'object') return;
+                        // Ignora mensagens do Calendly
                         if (data.event && String(data.event).indexOf('calendly') !== -1) return;
 
-                        var evt = String(data.event || data.type || '').toLowerCase();
+                        const evt = String(data.event || data.type || '').toLowerCase();
 
                         if (evt === 'play' || evt === 'playing') {
                             isPlaying = true;
                             startRaf();
-                            if (isIOS) {
-                                // Vídeo a tocar — agora bloqueia controlos nativos e mostra botão de som
-                                frame.style.pointerEvents = 'none';
-                                if (!soundBtn.dataset.dismissed) {
-                                    setTimeout(function() { soundBtn.style.display = 'flex'; }, 800);
-                                }
-                            }
-                            if (!data.muted) {
-                                soundBtn.style.display = 'none';
-                                soundBtn.dataset.dismissed = '1';
-                            }
+                            // Se tocou com som, esconde o botão
+                            if (!data.muted) soundBtn.style.display = 'none';
                         }
                         if (evt === 'pause') { isPlaying = false; stopRaf(); }
                         if (evt === 'ended' || evt === 'finish') {
@@ -999,11 +1008,7 @@
 
         // Smooth scroll on load
         window.addEventListener('load', function() {
-            try {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } catch(e) {
-                window.scrollTo(0, 0);
-            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
         // ═══════════════════════════════════════════════════════
@@ -1085,6 +1090,59 @@
 
         // Inicia o polling quando o Calendly abre
         // (chamado dentro de openCalendly())
+    </script>
+    <script>
+        // ══ DETECÇÃO iOS + LÓGICA DO BOTÃO ══
+        (function() {
+            var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            if (!isIOS) return;
+
+            // Mostra overlay e esconde o conteúdo principal
+            document.getElementById('iphoneOverlay').classList.add('active');
+            var container = document.querySelector('.container');
+            if (container) container.style.display = 'none';
+
+            document.getElementById('iphonePlayBtn').addEventListener('click', function() {
+                // Esconde overlay
+                document.getElementById('iphoneOverlay').classList.remove('active');
+                if (container) container.style.display = '';
+
+                // Substitui o iframe por um <video> nativo que o iOS suporta sem bloqueios
+                var wrapper = document.getElementById('vslWrapper');
+                if (!wrapper) return;
+
+                // Remove o iframe existente
+                var oldFrame = document.getElementById('mainVideo');
+                if (oldFrame) oldFrame.remove();
+
+                // Remove overlay e som btn
+                var po = document.getElementById('playOverlay');
+                if (po) po.remove();
+                var sb = document.getElementById('soundBtn');
+                if (sb) sb.remove();
+                var cl = document.getElementById('clickLayer');
+                if (cl) cl.remove();
+
+                // Cria link direto para o embed do Bunny (toque do utilizador já ativo)
+                // O iframe agora abre com som sem bloqueio pois está dentro de um gesto de toque
+                var aspect = document.querySelector('.vsl-aspect');
+                if (!aspect) return;
+
+                var iframe = document.createElement('iframe');
+                iframe.id = 'mainVideo';
+                iframe.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=false&loop=false&preload=true&responsive=true&controls=true';
+                iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0;';
+                iframe.setAttribute('allow', 'accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;fullscreen');
+                iframe.setAttribute('allowfullscreen', 'true');
+                iframe.setAttribute('playsinline', '');
+                iframe.setAttribute('webkit-playsinline', '');
+                aspect.appendChild(iframe);
+
+                // Inicia barra de progresso
+                isPlaying = true;
+                startRaf();
+            });
+        })();
     </script>
 </body>
 </html>
