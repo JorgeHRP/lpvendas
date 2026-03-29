@@ -663,10 +663,8 @@
                     <iframe id="mainVideo"
                         src="https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=true&loop=false&preload=true&responsive=true&controls=false"
                         style="position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;"
-                        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
-                        allowfullscreen="true"
-                        playsinline
-                        webkit-playsinline>
+                        allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"
+                        allowfullscreen="true">
                     </iframe>
 
                     <!-- Play Overlay -->
@@ -855,47 +853,13 @@
                     const clickLayer = document.getElementById('clickLayer');
                     const soundBtn   = document.getElementById('soundBtn');
 
-                    // Deteta iOS/Safari — não suporta autoplay de iframes
-                    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-                    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-                    const needsManualPlay = isIOS || isSafari;
-
-                    if (needsManualPlay) {
-                        // iOS: mantém overlay visível, espera o utilizador tocar
-                        overlay.classList.remove('hidden');
-                        clickLayer.style.display = 'block';
-                        clickLayer.style.zIndex = '11';
-
-                        function handleFirstTap() {
-                            // Ao tocar: recarrega iframe muted (igual ao desktop) aproveitando o gesto
-                            const frame = document.getElementById('mainVideo');
-                            frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=true&loop=false&preload=true&responsive=true&controls=false';
-                            overlay.classList.add('hidden');
-                            clickLayer.style.display = 'none';
-                            isPlaying = true;
-                            startRaf();
-                            // Mostra botão de som após 1.5s, igual ao desktop
-                            frame.onload = function() {
-                                isPlaying = true;
-                                startRaf();
-                                setTimeout(() => { soundBtn.style.display = 'flex'; }, 1500);
-                                frame.onload = null;
-                            };
-                            clickLayer.removeEventListener('click', handleFirstTap);
-                            overlay.removeEventListener('click', handleFirstTap);
-                        }
-
-                        clickLayer.addEventListener('click', handleFirstTap);
-                        overlay.addEventListener('click', handleFirstTap);
-                    } else {
-                        // Desktop/Android: esconde overlay — vídeo já está em autoplay muted
-                        overlay.classList.add('hidden');
-                        clickLayer.style.display = 'none';
-                        isPlaying = true;
-                        startRaf();
-                        // Mostra botão de som após 1.5s
-                        setTimeout(() => { soundBtn.style.display = 'flex'; }, 1500);
-                    }
+                    // Esconde overlay e clickLayer — vídeo já está em autoplay muted
+                    overlay.classList.add('hidden');
+                    clickLayer.style.display = 'none';
+                    isPlaying = true;
+                    startRaf();
+                    // Mostra botão de som após 1.5s
+                    setTimeout(() => { soundBtn.style.display = 'flex'; }, 1500);
 
                     // ── Eventos postMessage do Bunny ──────────────────────
                     window.addEventListener('message', function (e) {
@@ -911,7 +875,7 @@
                         if (evt === 'play' || evt === 'playing') {
                             isPlaying = true;
                             startRaf();
-                            // Se tocou com som, esconde o botão de som
+                            // Se tocou com som, esconde o botão
                             if (!data.muted) soundBtn.style.display = 'none';
                         }
                         if (evt === 'pause') { isPlaying = false; stopRaf(); }
