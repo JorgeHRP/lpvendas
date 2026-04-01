@@ -642,105 +642,9 @@
             max-height: 900px !important;
         }
 
-        /* ══════════════════════════════════════
-           IPHONE OVERLAY
-        ══════════════════════════════════════ */
-        #iphoneOverlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: #0d1520;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 40px;
-            padding: 40px 30px;
-        }
-        #iphoneOverlay.active { display: flex; }
-
-        .iphone-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--gold);
-            opacity: 0.7;
-        }
-
-        .iphone-headline {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.6rem, 6vw, 2.2rem);
-            font-weight: 900;
-            text-align: center;
-            line-height: 1.25;
-            color: var(--cream);
-            max-width: 340px;
-        }
-
-        .iphone-headline span {
-            background: linear-gradient(135deg, var(--cream) 0%, var(--gold) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .iphone-btn {
-            width: 100%;
-            max-width: 340px;
-            padding: 28px 20px;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            color: var(--darker);
-            border: none;
-            border-radius: 20px;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            font-weight: 900;
-            letter-spacing: 0.5px;
-            cursor: pointer;
-            box-shadow: 0 15px 50px rgba(212,165,116,0.5), 0 0 0 8px rgba(212,165,116,0.12);
-            animation: iphonePulse 2.2s ease-in-out infinite;
-            -webkit-tap-highlight-color: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-        }
-
-        @keyframes iphonePulse {
-            0%,100% { box-shadow: 0 15px 50px rgba(212,165,116,0.5), 0 0 0 8px rgba(212,165,116,0.12); }
-            50%      { box-shadow: 0 20px 65px rgba(212,165,116,0.7), 0 0 0 16px rgba(212,165,116,0.06); }
-        }
-
-        .iphone-btn svg {
-            width: 32px;
-            height: 32px;
-            fill: var(--darker);
-            flex-shrink: 0;
-        }
-
-        .iphone-note {
-            font-size: 0.85rem;
-            color: rgba(245,241,232,0.35);
-            text-align: center;
-            max-width: 280px;
-            line-height: 1.5;
-        }
     </style>
 </head>
 <body>
-    <!-- ══ IPHONE OVERLAY ══ -->
-    <div id="iphoneOverlay">
-        <div class="iphone-logo">Hélder Lages</div>
-        <h1 class="iphone-headline">
-            <span>Assiste à aula gratuita</span><br>agora
-        </h1>
-        <button class="iphone-btn" id="iphonePlayBtn">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            ▶ &nbsp;Iniciar Aula
-        </button>
-        <p class="iphone-note">O vídeo abre com som ligado.<br>Certifica-te que o teu telemóvel não está em modo silencioso.</p>
-    </div>
     <div class="bg-gradient"></div>
     
     <div class="container">
@@ -754,395 +658,133 @@
         <!-- VSL Section -->
         <section class="vsl-section" style="max-width:900px;margin:80px auto 40px;">
 
-            <!-- VSL Player -->
-            <div class="vsl-wrapper" id="vslWrapper">
-                <div class="vsl-aspect">
-                    <iframe id="mainVideo"
-                        src="https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=true&loop=false&preload=true&responsive=true&controls=false"
-                        style="position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;"
-                        allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"
-                        allowfullscreen="true">
-                    </iframe>
-
-                    <!-- Play Overlay -->
-                    <div id="playOverlay">
-                        <div class="play-circle">
-                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </div>
-                        <span class="play-label">Clica para assistir a aula</span>
-                    </div>
-
-                    <!-- Camada de clique (bloqueia iframe até primeiro clique) -->
-                    <div id="clickLayer" style="position:absolute;inset:0;z-index:8;cursor:pointer;"></div>
-
-                    <!-- Botão Ativar Som (aparece após primeiro play) -->
-                    <button id="soundBtn" onclick="activateSound()">
-                        🔊 Ativar Som
-                    </button>
-
-                    <!-- Progress bar (bottom of video) -->
-                    <div id="vslProgressTrack">
-                        <div id="vslProgressFill"></div>
-                    </div>
-                </div>
+            <!-- Vturb Player -->
+            <div id="vslWrapper" style="max-width:900px;margin:0 auto 60px;">
+                <vturb-smartplayer id="vid-69cd9bf94e1a825d7122b805" style="display:block;margin:0 auto;width:100%;"></vturb-smartplayer>
+                <script type="text/javascript">
+                    var s=document.createElement("script");
+                    s.src="https://scripts.converteai.net/1ad08d81-fc16-499e-b9ab-e1b86f1c62a3/players/69cd9bf94e1a825d7122b805/v4/player.js";
+                    s.async=true;
+                    document.head.appendChild(s);
+                </script>
             </div>
 
-            <!-- CTA Agendamento -->
+            <!-- CTA Agendamento (aparece após 190s) -->
             <h1 class="vsl-title" id="vslTitle" style="display:none;margin-bottom:20px;">Agenda um diagnóstico de rota complementar agora</h1>
             <p class="vsl-subtitle" id="vslSubtitle" style="display:none;margin-bottom:40px;">
                 Fala diretamente com o Hélder ou um dos membros da sua equipa para entenderes como podes desbloquear emocionalmente e aumentar o teu nível de autorização inconsciente.
             </p>
-            <div id="scheduleCtaWrapper">
-                <button id="scheduleCta" onclick="openCalendly()">
+            <div id="scheduleCtaWrapper" style="display:none;text-align:center;margin:0 auto 30px;max-width:900px;animation:fadeInUp 0.7s ease-out both;">
+                <button id="scheduleCta" onclick="openCalendly()" style="padding:22px 64px;font-size:1.35rem;font-weight:700;font-family:'Playfair Display',serif;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--darker);border:none;border-radius:14px;cursor:pointer;transition:all .35s ease;text-transform:uppercase;letter-spacing:1px;box-shadow:0 14px 40px rgba(212,165,116,0.4);animation:pulse 2s infinite;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:10px;margin-top:-2px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Clica aqui para agendar o teu diagnóstico →
                 </button>
             </div>
 
             <!-- Calendly -->
-            <div id="calendlySection">
-                <h2>Escolhe o Teu Horário</h2>
+            <div id="calendlySection" style="display:none;max-width:900px;margin:0 auto 80px;animation:fadeInUp 0.7s ease-out both;">
+                <h2 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;text-align:center;color:var(--gold);margin-bottom:16px;">Escolhe o Teu Horário</h2>
                 <div class="calendly-wrapper">
                     <div class="calendly-inline-widget" id="calendlyWidget"
                         data-url="https://calendly.com/lages2001/30min?background_color=121b26&text_color=d9b99b&primary_color=d9b99b"
                         style="min-width:320px;">
                     </div>
                 </div>
-                <!-- Botão fallback — aparece 3s após o widget carregar, esconde-se se o redirect acontecer -->
-                <div id="calendlyFallback" style="display:none; text-align:center; margin-top:30px;">
-                    <p style="color:rgba(245,241,232,0.6); font-size:1rem; margin-bottom:16px;">
-                        Sessão agendada? Clica para continuar →
-                    </p>
-                    <a href="3-obrigado.html" style="
-                        display:inline-block;
-                        padding:18px 50px;
-                        font-family:'Playfair Display',serif;
-                        font-size:1.15rem;
-                        font-weight:700;
-                        background:linear-gradient(135deg,var(--gold),var(--gold-dark));
-                        color:var(--darker);
-                        border-radius:12px;
-                        text-decoration:none;
-                        letter-spacing:0.5px;
-                        box-shadow:0 10px 30px rgba(212,165,116,0.35);
-                        transition:all .3s ease;
-                    " onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-                        Confirmar Agendamento ✓
-                    </a>
+                <div id="calendlyFallback" style="display:none;text-align:center;margin-top:30px;">
+                    <p style="color:rgba(245,241,232,0.6);font-size:1rem;margin-bottom:16px;">Sessão agendada? Clica para continuar →</p>
+                    <a href="3-obrigado.html" style="display:inline-block;padding:18px 50px;font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--darker);border-radius:12px;text-decoration:none;letter-spacing:0.5px;box-shadow:0 10px 30px rgba(212,165,116,0.35);">Confirmar Agendamento ✓</a>
                 </div>
             </div>
 
             <script>
-                // ══════════════════════════════════════
-                // CONFIG
-                // ══════════════════════════════════════
+                // ══ CTA — aparece após 190s de vídeo ══
                 const CTA_TRIGGER_SECONDS = 190;
-
-                const FAKE_CURVE = [
-                    { upTo: 0.12, rate: 3.8 },
-                    { upTo: 0.30, rate: 2.4 },
-                    { upTo: 0.55, rate: 1.5 },
-                    { upTo: 0.75, rate: 0.95 },
-                    { upTo: 1.00, rate: 0.65 },
-                ];
-                // ══════════════════════════════════════
-
-                let fakePct = 0, rafId = null, lastRafTime = null;
-                let ctaShown = false, calendlyLoaded = false, isPlaying = false;
-                let vidCurrentTime = 0, vidDuration = 1047; // 17min27s
-                let elapsedSeconds = 0, playStartTime = null;
-
-                function bPost(cmd, extra) {
-                    const frame = document.getElementById('mainVideo');
-                    if (!frame) return;
-                    frame.contentWindow.postMessage(JSON.stringify(Object.assign({ command: cmd }, extra || {})), '*');
-                }
-
-                function getFakeRate(pct) {
-                    for (const s of FAKE_CURVE) { if (pct <= s.upTo) return s.rate; }
-                    return 1;
-                }
-
-                function rafTick(ts) {
-                    if (!isPlaying) { rafId = null; return; }
-                    const delta = lastRafTime ? (ts - lastRafTime) / 1000 : 0.016;
-                    lastRafTime = ts;
-                    const dur = vidDuration || 1047;
-                    fakePct = Math.min(0.998, fakePct + (delta / dur) * getFakeRate(fakePct));
-                    document.getElementById('vslProgressFill').style.width = (fakePct * 100) + '%';
-                    // CTA baseado no tempo real decorrido desde o início
-                    const realElapsed = elapsedSeconds + (playStartTime ? (Date.now() - playStartTime) / 1000 : 0);
-                    if (!ctaShown && realElapsed >= CTA_TRIGGER_SECONDS) showCTA();
-                    rafId = requestAnimationFrame(rafTick);
-                }
-
-                function startRaf() {
-                    if (rafId) return;
-                    lastRafTime = null;
-                    if (!playStartTime) playStartTime = Date.now();
-                    rafId = requestAnimationFrame(rafTick);
-                }
-                function stopRaf() {
-                    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-                    lastRafTime = null;
-                    // Guarda tempo decorrido ao pausar
-                    if (playStartTime) { elapsedSeconds += (Date.now() - playStartTime) / 1000; playStartTime = null; }
-                }
+                var ctaShown = false;
+                var ctaInterval = null;
+                var ctaElapsed = 0;
 
                 function showCTA() {
+                    if (ctaShown) return;
                     ctaShown = true;
-                    const title    = document.getElementById('vslTitle');
-                    const subtitle = document.getElementById('vslSubtitle');
-                    if (title)    { title.style.display = 'block';    title.style.animation = 'fadeInUp 0.7s ease-out both'; }
-                    if (subtitle) { subtitle.style.display = 'block'; subtitle.style.animation = 'fadeInUp 0.7s ease-out 0.15s both'; }
-                    const el = document.getElementById('scheduleCtaWrapper');
-                    el.style.display = 'block';
-                    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
+                    if (ctaInterval) { clearInterval(ctaInterval); ctaInterval = null; }
+                    ['vslTitle','vslSubtitle'].forEach(function(id) {
+                        var el = document.getElementById(id);
+                        if (el) { el.style.display = 'block'; el.style.animation = 'fadeInUp 0.7s ease-out both'; }
+                    });
+                    var cta = document.getElementById('scheduleCtaWrapper');
+                    if (cta) cta.style.display = 'block';
+                    setTimeout(function() {
+                        var el = document.getElementById('scheduleCtaWrapper');
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
                 }
 
+                // Timer simples — começa quando a página carrega
+                // O Vturb gere o play/pause nativamente, aqui só precisamos do trigger da CTA
+                window.addEventListener('load', function() {
+                    ctaInterval = setInterval(function() {
+                        ctaElapsed++;
+                        if (ctaElapsed >= CTA_TRIGGER_SECONDS) showCTA();
+                    }, 1000);
+                });
+
+                // ══ Calendly ══
+                var calendlyLoaded = false;
+                var redirectDone = false;
+
                 function openCalendly() {
-                    const section = document.getElementById('calendlySection');
+                    var section = document.getElementById('calendlySection');
                     section.style.display = 'block';
                     if (!calendlyLoaded) {
-                        const params = new URLSearchParams(window.location.search);
-                        const name  = params.get('name')  || '';
-                        const email = params.get('email') || '';
+                        var params = new URLSearchParams(window.location.search);
+                        var name  = params.get('name')  || '';
+                        var email = params.get('email') || '';
                         var baseOrigin = window.location.origin + window.location.pathname.replace(/[^/]*$/, '');
                         var redirectUri = baseOrigin + '3-obrigado.html';
-                        let url = 'https://calendly.com/lages2001/30min?background_color=121b26&text_color=d9b99b&primary_color=d9b99b&redirect_uri=' + encodeURIComponent(redirectUri);
+                        var url = 'https://calendly.com/lages2001/30min?background_color=121b26&text_color=d9b99b&primary_color=d9b99b&redirect_uri=' + encodeURIComponent(redirectUri);
                         if (name)  url += '&name='  + encodeURIComponent(name);
                         if (email) url += '&email=' + encodeURIComponent(email);
                         document.getElementById('calendlyWidget').setAttribute('data-url', url);
-                        const s = document.createElement('script');
+                        var s = document.createElement('script');
                         s.src = 'https://assets.calendly.com/assets/external/widget.js';
                         s.async = true;
                         document.head.appendChild(s);
                         calendlyLoaded = true;
                     }
-                    setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+                    setTimeout(function() { section.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
                     showFallbackAfterDelay();
-                    setTimeout(startIframePolling, 3000);
                 }
 
-                // ── Clique no botão de som: reinicia com som ──────────────
-                function activateSound() {
-                    document.getElementById('soundBtn').style.display = 'none';
-                    fakePct = 0;
-                    vidCurrentTime = 0;
-                    vidDuration = 1047;
-                    elapsedSeconds = 0;
-                    playStartTime = null;
-                    document.getElementById('vslProgressFill').style.width = '0%';
-                    stopRaf();
-                    isPlaying = false;
-                    // Recarrega iframe com autoplay e sem mute
-                    const frame = document.getElementById('mainVideo');
-                    frame.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=false&loop=false&preload=true&responsive=true&controls=false';
-                    // Reinicia barra após o iframe carregar
-                    frame.onload = function() {
-                        isPlaying = true;
-                        startRaf();
-                        frame.onload = null;
-                    };
+                function doRedirect() {
+                    if (redirectDone) return;
+                    redirectDone = true;
+                    document.body.style.transition = 'opacity 0.5s ease';
+                    document.body.style.opacity = '0.4';
+                    setTimeout(function() { window.location.href = '3-obrigado.html'; }, 600);
                 }
 
-                window.addEventListener('load', function () {
-                    const overlay    = document.getElementById('playOverlay');
-                    const clickLayer = document.getElementById('clickLayer');
-                    const soundBtn   = document.getElementById('soundBtn');
-
-                    // Esconde overlay e clickLayer — vídeo já está em autoplay muted
-                    overlay.classList.add('hidden');
-                    clickLayer.style.display = 'none';
-                    isPlaying = true;
-                    startRaf();
-                    // Mostra botão de som após 1.5s
-                    setTimeout(() => { soundBtn.style.display = 'flex'; }, 1500);
-
-                    // ── Eventos postMessage do Bunny ──────────────────────
-                    window.addEventListener('message', function (e) {
-                        let data;
-                        try { data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; }
-                        catch(err) { return; }
-                        if (!data || typeof data !== 'object') return;
-                        // Ignora mensagens do Calendly
-                        if (data.event && String(data.event).indexOf('calendly') !== -1) return;
-
-                        const evt = String(data.event || data.type || '').toLowerCase();
-
-                        if (evt === 'play' || evt === 'playing') {
-                            isPlaying = true;
-                            startRaf();
-                            // Se tocou com som, esconde o botão
-                            if (!data.muted) soundBtn.style.display = 'none';
-                        }
-                        if (evt === 'pause') { isPlaying = false; stopRaf(); }
-                        if (evt === 'ended' || evt === 'finish') {
-                            isPlaying = false; stopRaf();
-                            document.getElementById('vslProgressFill').style.width = '100%';
-                            if (!ctaShown) showCTA();
-                        }
-                        if (evt === 'timeupdate') {
-                            if (data.currentTime !== undefined) vidCurrentTime = parseFloat(data.currentTime) || 0;
-                            if (data.duration    !== undefined) vidDuration    = parseFloat(data.duration)    || 0;
-                        }
-                    });
+                window.addEventListener('message', function(e) {
+                    try {
+                        var data = e.data;
+                        if (typeof data === 'string') data = JSON.parse(data);
+                        if (data.event === 'calendly.event_scheduled' || data.type === 'calendly.event_scheduled') doRedirect();
+                    } catch(err) {}
                 });
+
+                function showFallbackAfterDelay() {
+                    setTimeout(function() {
+                        if (!redirectDone) {
+                            var fb = document.getElementById('calendlyFallback');
+                            if (fb) fb.style.display = 'block';
+                        }
+                    }, 90000);
+                }
             </script>
         </section>
-
         
         <footer>
             <p>© 2026 Hélder Lages • Todos os direitos reservados</p>
         </footer>
     </div>
 
-    <script>
-        // Quiz interaction
-        const quizOptions = document.querySelectorAll('.quiz-option');
-        quizOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                this.style.background = 'rgba(212, 165, 116, 0.15)';
-                this.style.borderColor = 'var(--gold)';
-            });
-        });
-
-        // Smooth scroll on load
-        window.addEventListener('load', function() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // ═══════════════════════════════════════════════════════
-        // REDIRECT APÓS AGENDAMENTO NO CALENDLY
-        // Estratégia tripla: postMessage + iframe polling + botão fallback
-        // ═══════════════════════════════════════════════════════
-
-        var redirectDone = false;
-
-        function doRedirect() {
-            if (redirectDone) return;
-            redirectDone = true;
-            // Pequena animação antes de redirecionar
-            document.body.style.transition = 'opacity 0.5s ease';
-            document.body.style.opacity = '0.4';
-            setTimeout(function() {
-                window.location.href = '3-obrigado.html';
-            }, 600);
-        }
-
-        // ── Estratégia 1: postMessage (funciona em alguns ambientes) ──
-        window.addEventListener('message', function(e) {
-            try {
-                var data = e.data;
-                if (typeof data === 'string') data = JSON.parse(data);
-                if (
-                    data.event === 'calendly.event_scheduled' ||
-                    data.type  === 'calendly.event_scheduled'
-                ) {
-                    doRedirect();
-                }
-            } catch(err) {}
-        });
-
-        // ── Estratégia 2: polling do iframe ──
-        // O Calendly muda a URL do iframe para /confirmation quando o agendamento é feito.
-        // Também podemos detetar pelo título ou por mensagens de texto na página.
-        var iframeCheckInterval = null;
-
-        function startIframePolling() {
-            if (iframeCheckInterval) return;
-            iframeCheckInterval = setInterval(function() {
-                var iframe = document.querySelector('.calendly-inline-widget iframe');
-                if (!iframe) return;
-                try {
-                    // Tenta aceder ao href do iframe (falha cross-origin, mas tenta)
-                    var iframeSrc = iframe.src || iframe.getAttribute('src') || '';
-                    if (iframeSrc.indexOf('confirmation') !== -1 || iframeSrc.indexOf('scheduled') !== -1) {
-                        clearInterval(iframeCheckInterval);
-                        doRedirect();
-                        return;
-                    }
-                } catch(e2) {}
-
-                // Alternativa: verifica se o iframe aumentou de altura
-                // (a página de confirmação do Calendly é mais curta que o selector)
-                try {
-                    var h = iframe.offsetHeight || iframe.clientHeight;
-                    if (h > 0 && h < 400 && window._calendlyOrigHeight && window._calendlyOrigHeight > 500) {
-                        clearInterval(iframeCheckInterval);
-                        doRedirect();
-                        return;
-                    }
-                    if (h > 200) window._calendlyOrigHeight = h;
-                } catch(e3) {}
-            }, 800);
-        }
-
-        // ── Estratégia 3: botão fallback visível ──
-        // Aparece após 90s — garante que a pessoa nunca fica presa
-        function showFallbackAfterDelay() {
-            setTimeout(function() {
-                if (!redirectDone) {
-                    var fb = document.getElementById('calendlyFallback');
-                    if (fb) fb.style.display = 'block';
-                }
-            }, 90000);
-        }
-
-        // Inicia o polling quando o Calendly abre
-        // (chamado dentro de openCalendly())
-    </script>
-    <script>
-        // ══ DETECÇÃO iOS + LÓGICA DO BOTÃO ══
-        (function() {
-            var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-            if (!isIOS) return;
-
-            // Mostra overlay e esconde o conteúdo principal
-            document.getElementById('iphoneOverlay').classList.add('active');
-            var container = document.querySelector('.container');
-            if (container) container.style.display = 'none';
-
-            document.getElementById('iphonePlayBtn').addEventListener('click', function() {
-                // Esconde overlay
-                document.getElementById('iphoneOverlay').classList.remove('active');
-                if (container) container.style.display = '';
-
-                // Substitui o iframe por um <video> nativo que o iOS suporta sem bloqueios
-                var wrapper = document.getElementById('vslWrapper');
-                if (!wrapper) return;
-
-                // Remove o iframe existente
-                var oldFrame = document.getElementById('mainVideo');
-                if (oldFrame) oldFrame.remove();
-
-                // Remove overlay e som btn
-                var po = document.getElementById('playOverlay');
-                if (po) po.remove();
-                var sb = document.getElementById('soundBtn');
-                if (sb) sb.remove();
-                var cl = document.getElementById('clickLayer');
-                if (cl) cl.remove();
-
-                // Cria link direto para o embed do Bunny (toque do utilizador já ativo)
-                // O iframe agora abre com som sem bloqueio pois está dentro de um gesto de toque
-                var aspect = document.querySelector('.vsl-aspect');
-                if (!aspect) return;
-
-                var iframe = document.createElement('iframe');
-                iframe.id = 'mainVideo';
-                iframe.src = 'https://player.mediadelivery.net/embed/627379/29845839-801e-4b56-8e22-fefb11349234?autoplay=true&muted=false&loop=false&preload=true&responsive=true&controls=true';
-                iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0;';
-                iframe.setAttribute('allow', 'accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;fullscreen');
-                iframe.setAttribute('allowfullscreen', 'true');
-                iframe.setAttribute('playsinline', '');
-                iframe.setAttribute('webkit-playsinline', '');
-                aspect.appendChild(iframe);
-
-                // Inicia barra de progresso
-                isPlaying = true;
-                startRaf();
-            });
-        })();
-    </script>
 </body>
 </html>
