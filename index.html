@@ -556,11 +556,17 @@
             document.getElementById('submitBtn').disabled = !this.checked;
         });
 
-        /* ── Phone formatting ── */
+        /* ── Phone formatting & validation (exactly 9 digits) ── */
         document.getElementById('phone').addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 9) value = value.slice(0, 9);
             let formatted = value.match(/.{1,3}/g);
             e.target.value = formatted ? formatted.join(' ') : '';
+            if (value.length === 9) {
+                e.target.setCustomValidity('');
+            } else {
+                e.target.setCustomValidity('O número de telefone deve ter exatamente 9 dígitos.');
+            }
         });
 
         /* ── Form submit ── */
