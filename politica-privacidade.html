@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidade | ARCANUM VITAE, LDA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #D4A574;
+            --gold-dark: #B8935F;
+            --cream: #F5F1E8;
+            --darker: #1A2332;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: var(--darker);
+            color: var(--cream);
+            overflow-x: hidden;
+        }
+
+        .bg-glow {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse 60% 40% at 20% 10%, rgba(212,165,116,0.05) 0%, transparent 70%);
+        }
+
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 60px 24px 80px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(212,165,116,0.65);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 48px;
+            border-bottom: 1px solid rgba(212,165,116,0.25);
+            padding-bottom: 2px;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--gold); }
+
+        /* Header */
+        .doc-header {
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid rgba(212,165,116,0.15);
+        }
+        .doc-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212,165,116,0.08);
+            border: 1px solid rgba(212,165,116,0.25);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 900;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+        .doc-meta {
+            font-size: 0.88rem;
+            color: rgba(245,241,232,0.4);
+            line-height: 1.7;
+        }
+        .doc-meta strong { color: rgba(245,241,232,0.65); }
+
+        /* Content */
+        .doc-section {
+            margin-bottom: 44px;
+        }
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(212,165,116,0.12);
+        }
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: rgba(212,165,116,0.8);
+            margin: 20px 0 10px;
+        }
+        p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(245,241,232,0.72);
+            margin-bottom: 14px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 14px;
+        }
+        ul li {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: rgba(245,241,232,0.72);
+            padding: 4px 0 4px 18px;
+            position: relative;
+        }
+        ul li::before {
+            content: '·';
+            position: absolute;
+            left: 4px;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        /* Table */
+        .doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 0.92rem;
+        }
+        .doc-table th {
+            text-align: left;
+            padding: 10px 14px;
+            background: rgba(212,165,116,0.08);
+            color: var(--gold);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 0.88rem;
+            border-bottom: 1px solid rgba(212,165,116,0.2);
+        }
+        .doc-table td {
+            padding: 10px 14px;
+            color: rgba(245,241,232,0.68);
+            border-bottom: 1px solid rgba(212,165,116,0.07);
+            line-height: 1.55;
+            vertical-align: top;
+        }
+        .doc-table tr:last-child td { border-bottom: none; }
+        .doc-table tr:hover td { background: rgba(212,165,116,0.03); }
+
+        /* Rights cards */
+        .rights-grid {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .right-card {
+            background: rgba(212,165,116,0.04);
+            border: 1px solid rgba(212,165,116,0.14);
+            border-radius: 10px;
+            padding: 16px 20px;
+        }
+        .right-card strong {
+            display: block;
+            color: rgba(212,165,116,0.85);
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+        .right-card span {
+            font-size: 0.9rem;
+            color: rgba(245,241,232,0.6);
+            line-height: 1.6;
+        }
+
+        /* Contact box */
+        .contact-box {
+            background: rgba(212,165,116,0.05);
+            border: 1px solid rgba(212,165,116,0.2);
+            border-radius: 14px;
+            padding: 28px 32px;
+            margin-bottom: 14px;
+        }
+        .contact-box p { margin-bottom: 6px; }
+        .contact-box a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(212,165,116,0.3); }
+        .contact-box a:hover { border-color: var(--gold); }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 48px 20px 36px;
+            border-top: 1px solid rgba(212,165,116,0.1);
+            color: rgba(245,241,232,0.35);
+            font-size: 0.88rem;
+            line-height: 1.9;
+            margin-top: 20px;
+        }
+        footer a { color: rgba(212,165,116,0.65); text-decoration: none; border-bottom: 1px solid rgba(212,165,116,0.25); }
+        footer a:hover { color: var(--gold); }
+
+        @media (max-width: 600px) {
+            .container { padding: 40px 16px 60px; }
+            .doc-table { font-size: 0.82rem; }
+            .doc-table th, .doc-table td { padding: 8px 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+
+    <div class="container">
+        <a href="javascript:history.back()" class="back-link">← Voltar</a>
+
+        <div class="doc-header">
+            <div class="doc-badge">RGPD · Lei n.º 58/2019</div>
+            <h1>Política de Privacidade e Tratamento de Dados</h1>
+            <p class="doc-meta">
+                <strong>Versão:</strong> 1.0 &nbsp;·&nbsp; <strong>Vigência:</strong> 10 de março de 2025<br>
+                <strong>Entidade:</strong> ARCANUM VITAE, LDA &nbsp;·&nbsp; <strong>NIPC:</strong> 519318080
+            </p>
+        </div>
+
+        <div class="doc-section">
+            <h2>1. Responsável pelo Tratamento</h2>
+            <div class="contact-box">
+                <p><strong style="color:rgba(245,241,232,0.85);">ARCANUM VITAE, LDA</strong></p>
+                <p>NIPC: 519318080</p>
+                <p>Rua 3 Pastorinhos, n.º 191, 7.º andar, Fração AB, Marco de Canaveses, 4630-487</p>
+                <p>Sócios-gerentes: Hélder Rafael da Silva Lages e Ingrid Guimarães Ferreira Barroso</p>
+                <p>E-mail: <a href="mailto:contato@arcanumvitae.pt">contato@arcanumvitae.pt</a></p>
+                <p>Telefone: +351 911 590 335</p>
+            </div>
+            <p>A ARCANUM VITAE, LDA compromete-se a proteger a privacidade e os dados pessoais de todos os seus clientes, parceiros, colaboradores, formandos e utilizadores, em conformidade com a legislação aplicável.</p>
+        </div>
+
+        <div class="doc-section">
+            <h2>2. Dados Pessoais Tratados</h2>
+            <h3>2.1 Identificação e contacto</h3>
+            <ul>
+                <li>Nome completo e outros identificadores pessoais</li>
+                <li>Número de Identificação Fiscal (NIF) e documentos de identidade</li>
+                <li>Morada, código postal e localidade</li>
+                <li>Endereço de e-mail e número de telefone/telemóvel</li>
+                <li>Data de nascimento e, se aplicável, fotografia</li>
+            </ul>
+            <h3>2.2 Dados económico-financeiros</h3>
+            <ul>
+                <li>Dados bancários e de meios de pagamento (processados por plataformas certificadas PCI-DSS)</li>
+                <li>Dados de faturação e histórico de transações</li>
+                <li>Informação sobre subscrições e produtos ou serviços adquiridos</li>
+            </ul>
+            <h3>2.3 Dados de utilização digital</h3>
+            <ul>
+                <li>Endereço IP e dados de navegação no website</li>
+                <li>Identificadores de dispositivo e informação de sessão</li>
+                <li>Dados de interação com comunicações eletrónicas (abertura de e-mails, cliques)</li>
+                <li>Preferências e histórico de utilização de plataformas de e-learning</li>
+            </ul>
+            <h3>2.4 Dados audiovisuais</h3>
+            <ul>
+                <li>Fotografias, vídeos e gravações captadas em eventos e formações, mediante consentimento expresso</li>
+            </ul>
+            <h3>2.5 Dados de categorias especiais (Art.º 9.º RGPD)</h3>
+            <p>Dados de saúde, convicções filosóficas ou religiosas, orientação sexual e dados biométricos são tratados apenas quando estritamente necessário e mediante consentimento explícito, sendo objeto de proteção reforçada.</p>
+        </div>
+
+        <div class="doc-section">
+            <h2>3. Finalidades e Bases Legais</h2>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Finalidade</th>
+                        <th>Base Legal</th>
+                        <th>Conservação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Gestão de contratos de formação, mentoria e coaching</td>
+                        <td>Execução de contrato (Art.º 6.º, al. b) RGPD)</td>
+                        <td>5 anos após cessação</td>
+                    </tr>
+                    <tr>
+                        <td>Faturação e obrigações contabilísticas</td>
+                        <td>Obrigação legal (Art.º 6.º, al. c) RGPD)</td>
+                        <td>10 anos (CIRC e CIVA)</td>
+                    </tr>
+                    <tr>
+                        <td>Marketing direto e comunicações promocionais</td>
+                        <td>Consentimento (Art.º 6.º, al. a) RGPD)</td>
+                        <td>Até revogação do consentimento</td>
+                    </tr>
+                    <tr>
+                        <td>Gestão de participantes em eventos e formações</td>
+                        <td>Execução de contrato (Art.º 6.º, al. b) RGPD)</td>
+                        <td>3 anos após o evento</td>
+                    </tr>
+                    <tr>
+                        <td>Publicação de imagem e depoimentos</td>
+                        <td>Consentimento (Art.º 6.º, al. a) RGPD)</td>
+                        <td>Até revogação do consentimento</td>
+                    </tr>
+                    <tr>
+                        <td>Segurança e prevenção de fraude</td>
+                        <td>Interesse legítimo (Art.º 6.º, al. f) RGPD)</td>
+                        <td>2 anos</td>
+                    </tr>
+                    <tr>
+                        <td>Análise e melhoria de produtos/serviços digitais</td>
+                        <td>Interesse legítimo (Art.º 6.º, al. f) RGPD)</td>
+                        <td>2 anos (dados anonimizados)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="doc-section">
+            <h2>4. Destinatários e Transferências</h2>
+            <p>Os dados são acessíveis exclusivamente a colaboradores e gerentes da ARCANUM VITAE, LDA que, no exercício das suas funções, necessitem de os conhecer, estando sujeitos a obrigações de confidencialidade.</p>
+            <p>Podem ser partilhados com terceiros que fornecem serviços essenciais à nossa atividade, sempre com garantias adequadas de proteção, designadamente:</p>
+            <ul>
+                <li>Plataformas de e-learning (ex.: Hotmart, Eduzz, Teachable)</li>
+                <li>Processadores de pagamento certificados PCI-DSS (ex.: Stripe, PayPal, SIBS)</li>
+                <li>Ferramentas de e-mail marketing e CRM (ex.: Mailchimp, ActiveCampaign)</li>
+                <li>Serviços de videoconferência (ex.: Zoom, Google Meet)</li>
+                <li>Parceiros de publicidade digital (ex.: Meta Ads, Google Ads), mediante consentimento</li>
+                <li>Advogados, contabilistas e auditores, no âmbito de obrigações legais</li>
+            </ul>
+            <p>As transferências para fora da UE/EEE são efetuadas com garantias adequadas, designadamente via decisão de adequação ou cláusulas contratuais-tipo aprovadas pela Comissão Europeia (Art.º 46.º RGPD).</p>
+        </div>
+
+        <div class="doc-section">
+            <h2>5. Segurança dos Dados</h2>
+            <p>Implementamos medidas técnicas e organizativas para proteger os seus dados, incluindo encriptação SSL/TLS e AES-256, controlo de acessos baseado em privilégios mínimos, autenticação multifator para sistemas críticos, cópias de segurança regulares e procedimentos de resposta a incidentes com notificação à CNPD no prazo de 72 horas (Art.º 33.º RGPD).</p>
+        </div>
+
+        <div class="doc-section">
+            <h2>6. Os Seus Direitos</h2>
+            <p>Nos termos do RGPD e da Lei n.º 58/2019, pode exercer a qualquer momento os seguintes direitos:</p>
+            <div class="rights-grid">
+                <div class="right-card">
+                    <strong>Direito de acesso (Art.º 15.º)</strong>
+                    <span>Obter confirmação sobre se os seus dados são tratados e aceder aos mesmos.</span>
+                </div>
+                <div class="right-card">
+                    <strong>Direito de retificação (Art.º 16.º)</strong>
+                    <span>Solicitar a correção de dados inexatos ou incompletos.</span>
+                </div>
+                <div class="right-card">
+                    <strong>Direito ao apagamento (Art.º 17.º)</strong>
+                    <span>Solicitar a eliminação dos seus dados quando já não sejam necessários ou o consentimento seja revogado.</span>
+                </div>
+                <div class="right-card">
+                    <strong>Direito de limitação (Art.º 18.º)</strong>
+                    <span>Solicitar a suspensão temporária do tratamento em determinadas circunstâncias.</span>
+                </div>
+                <div class="right-card">
+                    <strong>Direito de portabilidade (Art.º 20.º)</strong>
+                    <span>Receber os seus dados em formato estruturado e de leitura automática.</span>
+                </div>
+                <div class="right-card">
+                    <strong>Direito de oposição (Art.º 21.º)</strong>
+                    <span>Opor-se ao tratamento para fins de marketing direto, a qualquer momento e sem encargos.</span>
+                </div>
+            </div>
+            <p>Para exercer os seus direitos, envie um pedido escrito com comprovativo de identidade para <a href="mailto:contato@arcanumvitae.pt" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(212,165,116,0.3);">contato@arcanumvitae.pt</a>. O prazo de resposta é de 30 dias, podendo ser prorrogado por mais 60 dias em casos de complexidade.</p>
+        </div>
+
+        <div class="doc-section">
+            <h2>7. Reclamações</h2>
+            <div class="contact-box">
+                <p><strong style="color:rgba(245,241,232,0.85);">Comissão Nacional de Proteção de Dados (CNPD)</strong></p>
+                <p>Av. D. Carlos I, 134, 1.º, 1200-651 Lisboa</p>
+                <p>E-mail: <a href="mailto:geral@cnpd.pt">geral@cnpd.pt</a> &nbsp;·&nbsp; Website: <a href="https://www.cnpd.pt" target="_blank" rel="noopener">www.cnpd.pt</a></p>
+                <p>Telefone: +351 213 928 400</p>
+            </div>
+        </div>
+
+        <div class="doc-section">
+            <h2>8. Alterações à Política</h2>
+            <p>A ARCANUM VITAE, LDA reserva-se o direito de alterar esta Política em qualquer momento. As alterações substanciais serão comunicadas com antecedência mínima de 15 dias através dos meios habituais de comunicação.</p>
+        </div>
+
+        <footer>
+            <p style="margin-bottom:6px;">
+                © 2026 <strong style="color:rgba(245,241,232,0.55);">ARCANUM VITAE, LDA</strong>
+                &nbsp;·&nbsp; NIPC 519318080
+                &nbsp;·&nbsp; Marco de Canaveses
+            </p>
+            <p style="margin-bottom:4px;">
+                <a href="politica-privacidade.html">Política de Privacidade</a>
+                &nbsp;·&nbsp;
+                <a href="politica-cookies.html">Política de Cookies</a>
+                &nbsp;·&nbsp;
+                <a href="mailto:contato@arcanumvitae.pt">contato@arcanumvitae.pt</a>
+            </p>
+            <p style="font-size:0.8rem;margin-top:4px;color:rgba(245,241,232,0.22);">
+                Todos os direitos reservados. Os dados pessoais são tratados nos termos do RGPD.
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

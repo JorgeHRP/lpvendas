@@ -8,11 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Crimson+Text:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --gold: #D4A574;
@@ -32,20 +28,17 @@
 
         .bg-pattern {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             opacity: 0.03;
-            background-image: 
+            background-image:
                 repeating-linear-gradient(45deg, transparent, transparent 35px, var(--gold) 35px, var(--gold) 36px),
                 repeating-linear-gradient(-45deg, transparent, transparent 35px, var(--gold) 35px, var(--gold) 36px);
             animation: slidePattern 60s linear infinite;
             pointer-events: none;
         }
-
         @keyframes slidePattern {
-            0% { transform: translate(0, 0); }
+            0%   { transform: translate(0, 0); }
             100% { transform: translate(50px, 50px); }
         }
 
@@ -67,8 +60,8 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: linear-gradient(135deg, rgba(212, 165, 116, 0.1), rgba(212, 165, 116, 0.05));
-            border: 1px solid rgba(212, 165, 116, 0.3);
+            background: linear-gradient(135deg, rgba(212,165,116,0.1), rgba(212,165,116,0.05));
+            border: 1px solid rgba(212,165,116,0.3);
             padding: 8px 20px;
             border-radius: 30px;
             font-size: 13px;
@@ -79,18 +72,13 @@
             margin-bottom: 3px;
             backdrop-filter: blur(10px);
         }
-
         .shield-icon {
-            width: 16px;
-            height: 16px;
+            width: 16px; height: 16px;
             background: var(--gold);
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
         }
 
-        .hero {
-            text-align: center;
-            animation: fadeInUp 1s ease-out 0.2s both;
-        }
+        .hero { text-align: center; animation: fadeInUp 1s ease-out 0.2s both; }
 
         h1 {
             font-family: 'Playfair Display', serif;
@@ -104,7 +92,6 @@
             background-clip: text;
         }
 
-        /* CTA Buttons */
         .cta-button {
             display: inline-block;
             width: 100%;
@@ -120,27 +107,17 @@
             cursor: pointer;
             transition: all 0.3s ease;
             letter-spacing: 0.5px;
-            box-shadow: 0 8px 30px rgba(212, 165, 116, 0.3);
+            box-shadow: 0 8px 30px rgba(212,165,116,0.3);
             text-decoration: none;
             text-align: center;
         }
-
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(212, 165, 116, 0.5);
+            box-shadow: 0 15px 40px rgba(212,165,116,0.5);
         }
+        .cta-wrap { text-align: center; margin: 30px 0; }
 
-        .cta-wrap {
-            text-align: center;
-            margin: 30px 0;
-        }
-
-        /* Benefits / Learn Section */
-        .benefits {
-            margin: 50px 0 20px;
-            animation: fadeInUp 1s ease-out 0.4s both;
-        }
-
+        .benefits { margin: 50px 0 20px; animation: fadeInUp 1s ease-out 0.4s both; }
         .benefits-intro {
             font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
@@ -150,70 +127,48 @@
             text-align: center;
             letter-spacing: 0.5px;
         }
-
         .benefit-item {
             display: flex;
             align-items: flex-start;
             gap: 20px;
             padding: 20px;
             margin-bottom: 16px;
-            background: rgba(212, 165, 116, 0.03);
+            background: rgba(212,165,116,0.03);
             border-left: 3px solid var(--gold);
             border-radius: 8px;
             transition: all 0.3s ease;
         }
-
-        .benefit-item:hover {
-            background: rgba(212, 165, 116, 0.08);
-            transform: translateX(8px);
-        }
-
+        .benefit-item:hover { background: rgba(212,165,116,0.08); transform: translateX(8px); }
         .check-icon {
-            min-width: 28px;
-            height: 28px;
+            min-width: 28px; height: 28px;
             background: var(--gold);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             font-weight: bold;
             color: var(--darker);
             font-size: 18px;
             margin-top: 2px;
         }
+        .benefit-text { font-size: 1.1rem; line-height: 1.6; color: rgba(245,241,232,0.9); }
 
-        .benefit-text {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: rgba(245, 241, 232, 0.9);
-        }
-
-        /* Modal Overlay */
+        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(10, 15, 25, 0.85);
+            background: rgba(10,15,25,0.85);
             z-index: 1000;
             align-items: center;
             justify-content: center;
             padding: 20px;
             backdrop-filter: blur(6px);
-            animation: fadeIn 0.3s ease;
         }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .modal-box {
             background: linear-gradient(135deg, #1e2d3d, var(--darker));
-            border: 2px solid rgba(212, 165, 116, 0.3);
+            border: 2px solid rgba(212,165,116,0.3);
             border-radius: 20px;
             padding: 50px 40px;
             width: 100%;
@@ -223,25 +178,21 @@
             box-shadow: 0 30px 80px rgba(0,0,0,0.6);
             animation: slideUp 0.35s ease;
         }
-
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         .modal-close {
             position: absolute;
-            top: 16px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: rgba(245, 241, 232, 0.5);
+            top: 16px; right: 20px;
+            background: none; border: none;
+            color: rgba(245,241,232,0.5);
             font-size: 1.6rem;
             cursor: pointer;
             line-height: 1;
             transition: color 0.2s;
         }
-
         .modal-close:hover { color: var(--gold); }
 
         .form-title {
@@ -251,22 +202,14 @@
             margin-bottom: 10px;
             color: var(--gold);
         }
-
         .form-subtitle {
             font-size: 1.05rem;
-            color: rgba(245, 241, 232, 0.7);
+            color: rgba(245,241,232,0.7);
             margin-bottom: 30px;
         }
 
-        form {
-            max-width: 440px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
+        form { max-width: 440px; margin: 0 auto; }
+        .form-group { margin-bottom: 20px; text-align: left; }
 
         label {
             display: block;
@@ -282,35 +225,29 @@
             padding: 16px 20px;
             font-size: 1.05rem;
             font-family: 'Crimson Text', serif;
-            background: rgba(245, 241, 232, 0.05);
-            border: 2px solid rgba(212, 165, 116, 0.3);
+            background: rgba(245,241,232,0.05);
+            border: 2px solid rgba(212,165,116,0.3);
             border-radius: 10px;
             color: var(--cream);
             transition: all 0.3s ease;
         }
-
-        input::placeholder { color: rgba(245, 241, 232, 0.3); }
-
+        input::placeholder { color: rgba(245,241,232,0.3); }
         input:focus {
             outline: none;
             border-color: var(--gold);
-            background: rgba(245, 241, 232, 0.08);
-            box-shadow: 0 0 0 4px rgba(212, 165, 116, 0.1);
+            background: rgba(245,241,232,0.08);
+            box-shadow: 0 0 0 4px rgba(212,165,116,0.1);
         }
 
-        .phone-row {
-            display: flex;
-            gap: 10px;
-        }
-
+        .phone-row { display: flex; gap: 10px; }
         .ddd-select {
             width: 140px;
             flex-shrink: 0;
             padding: 16px 12px;
             font-size: 1.05rem;
             font-family: 'Crimson Text', serif;
-            background: rgba(245, 241, 232, 0.05);
-            border: 2px solid rgba(212, 165, 116, 0.3);
+            background: rgba(245,241,232,0.05);
+            border: 2px solid rgba(212,165,116,0.3);
             border-radius: 10px;
             color: var(--cream);
             transition: all 0.3s ease;
@@ -322,20 +259,53 @@
             background-position: right 10px center;
             padding-right: 30px;
         }
-
         .ddd-select:focus {
             outline: none;
             border-color: var(--gold);
-            background-color: rgba(245, 241, 232, 0.1);
-            box-shadow: 0 0 0 4px rgba(212, 165, 116, 0.1);
+            background-color: rgba(245,241,232,0.1);
+            box-shadow: 0 0 0 4px rgba(212,165,116,0.1);
         }
-
-        .ddd-select option {
-            background: var(--darker);
-            color: var(--cream);
-        }
-
+        .ddd-select option { background: var(--darker); color: var(--cream); }
         .phone-row input { flex: 1; }
+
+        /* ── Consent checkbox ── */
+        .consent-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .consent-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            min-width: 18px;
+            padding: 0;
+            margin-top: 2px;
+            accent-color: var(--gold);
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .consent-label {
+            font-size: 0.88rem;
+            line-height: 1.55;
+            color: rgba(245,241,232,0.55);
+            cursor: pointer;
+        }
+        .consent-label a {
+            color: rgba(212,165,116,0.8);
+            text-decoration: underline;
+        }
+        .consent-label a:hover { color: var(--gold); }
+
+        /* ── Finalidade ── */
+        .data-purpose {
+            font-size: 0.82rem;
+            color: rgba(245,241,232,0.38);
+            text-align: center;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
 
         .submit-btn {
             width: 100%;
@@ -349,36 +319,44 @@
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-top: 10px;
-            box-shadow: 0 8px 30px rgba(212, 165, 116, 0.3);
+            margin-top: 4px;
+            box-shadow: 0 8px 30px rgba(212,165,116,0.3);
         }
-
-        .submit-btn:hover {
+        .submit-btn:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(212, 165, 116, 0.5);
+            box-shadow: 0 15px 40px rgba(212,165,116,0.5);
+        }
+        .submit-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        .trust-text {
-            margin-top: 18px;
-            font-size: 0.9rem;
-            color: rgba(245, 241, 232, 0.4);
-        }
+        .trust-text { margin-top: 18px; font-size: 0.9rem; color: rgba(245,241,232,0.4); }
 
+        /* Footer */
         footer {
             text-align: center;
-            padding: 60px 20px 40px;
-            color: rgba(245, 241, 232, 0.4);
-            font-size: 0.9rem;
+            padding: 48px 20px 36px;
+            border-top: 1px solid rgba(212,165,116,0.1);
+            color: rgba(245,241,232,0.35);
+            font-size: 0.88rem;
+            line-height: 1.9;
         }
+        footer a {
+            color: rgba(212,165,116,0.65);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(212,165,116,0.25);
+        }
+        footer a:hover { color: var(--gold); }
 
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
+            to   { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 768px) {
@@ -390,7 +368,7 @@
 </head>
 <body>
     <div class="bg-pattern"></div>
-    
+
     <div class="container">
         <header>
             <div class="logo-badge">
@@ -401,7 +379,6 @@
 
         <section class="hero">
             <h1>O motivo inconsciente pelo qual empreendedores que trabalham +10h por dia não conseguem ultrapassar os 15.000€ por mês</h1>
-
             <div class="cta-wrap">
                 <button class="cta-button" onclick="openModal()">
                     Aula disponível para assistir agora →
@@ -411,7 +388,6 @@
 
         <section class="benefits">
             <p class="benefits-intro">Vais aprender:</p>
-
             <div class="benefit-item">
                 <div class="check-icon">✓</div>
                 <p class="benefit-text">Porque até já ganhaste dinheiro, mas hoje estás abaixo daquilo que sabes que és capaz</p>
@@ -433,7 +409,21 @@
         </div>
 
         <footer>
-            <p>© 2026 Hélder Lages • Todos os direitos reservados</p>
+            <p style="margin-bottom:6px;">
+                © 2026 <strong style="color:rgba(245,241,232,0.55);">ARCANUM VITAE, LDA</strong>
+                &nbsp;·&nbsp; NIPC 519318080
+                &nbsp;·&nbsp; Marco de Canaveses
+            </p>
+            <p style="margin-bottom:4px;">
+                <a href="politica-privacidade.html">Política de Privacidade</a>
+                &nbsp;·&nbsp;
+                <a href="politica-cookies.html">Política de Cookies</a>
+                &nbsp;·&nbsp;
+                <a href="mailto:contato@arcanumvitae.pt">contato@arcanumvitae.pt</a>
+            </p>
+            <p style="font-size:0.8rem;margin-top:4px;color:rgba(245,241,232,0.22);">
+                Todos os direitos reservados. Os dados pessoais são tratados nos termos do RGPD.
+            </p>
         </footer>
     </div>
 
@@ -443,18 +433,16 @@
             <button class="modal-close" onclick="closeModal()">×</button>
             <h2 class="form-title">Quero Assistir Agora</h2>
             <p class="form-subtitle">Insere os teus dados para acederes à aula</p>
-            
+
             <form id="optinForm" action="vsl.html" method="GET">
                 <div class="form-group">
                     <label for="name">Nome Completo</label>
                     <input type="text" id="name" name="name" placeholder="O teu nome" required>
                 </div>
-                
                 <div class="form-group">
                     <label for="email">Melhor Email</label>
                     <input type="email" id="email" name="email" placeholder="teu@email.com" required>
                 </div>
-
                 <div class="form-group">
                     <label for="phone">WhatsApp / Telefone</label>
                     <div class="phone-row">
@@ -493,52 +481,148 @@
                         <input type="tel" id="phone" name="phone" placeholder="912 345 678" required>
                     </div>
                 </div>
-                
-                <button type="submit" class="submit-btn">
+
+                <!-- Aviso de finalidade -->
+                <p class="data-purpose">
+                    Os teus dados (nome, email, telefone) serão usados para gestão de contactos e envio de comunicações de marketing pela ARCANUM VITAE, LDA.
+                </p>
+
+                <!-- Consentimento explícito -->
+                <div class="consent-group">
+                    <input type="checkbox" id="gdprConsent" name="gdprConsent" required>
+                    <label class="consent-label" for="gdprConsent">
+                        Li e aceito a <a href="politica-privacidade.html" target="_blank">Política de Privacidade</a> e consinto o tratamento dos meus dados para os fins indicados.
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn" disabled>
                     Assistir Agora →
                 </button>
             </form>
-            
+
             <p class="trust-text">🔒 Os teus dados estão seguros. Respeitamos a tua privacidade.</p>
         </div>
     </div>
 
+    <!-- Cookie Banner -->
+    <div id="cookieBanner" style="
+        display:none;
+        position:fixed;
+        bottom:0;left:0;right:0;
+        z-index:99999;
+        background:rgba(18,27,38,0.97);
+        border-top:1px solid rgba(212,165,116,0.22);
+        padding:14px 24px;
+        font-family:'Crimson Text',serif;
+        font-size:0.92rem;
+        color:rgba(245,241,232,0.72);
+        backdrop-filter:blur(10px);
+        -webkit-backdrop-filter:blur(10px);
+        align-items:center;
+        justify-content:space-between;
+        flex-wrap:wrap;
+        gap:12px;
+    ">
+        <span style="flex:1;min-width:200px;line-height:1.5;">
+            Utilizamos cookies para análise e marketing. Consulta a nossa
+            <a href="politica-cookies.html" style="color:rgba(212,165,116,0.85);text-decoration:underline;">Política de Cookies</a>.
+        </span>
+        <span style="display:flex;gap:10px;flex-shrink:0;align-items:center;">
+            <button onclick="cookieReject()" style="background:none;border:1px solid rgba(212,165,116,0.35);color:rgba(245,241,232,0.6);padding:7px 16px;border-radius:6px;font-family:'Crimson Text',serif;font-size:0.88rem;cursor:pointer;">
+                Rejeitar não essenciais
+            </button>
+            <button onclick="cookieAccept()" style="background:linear-gradient(135deg,#D4A574,#B8935F);border:none;color:#1A2332;padding:7px 20px;border-radius:6px;font-family:'Crimson Text',serif;font-size:0.88rem;font-weight:700;cursor:pointer;">
+                Aceitar
+            </button>
+        </span>
+    </div>
+
     <script>
+        /* ── Modal ── */
         function openModal() {
             document.getElementById('modalOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-
         function closeModal() {
             document.getElementById('modalOverlay').classList.remove('active');
             document.body.style.overflow = '';
         }
-
-        // Close modal on overlay click
         document.getElementById('modalOverlay').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
 
-        // Phone number formatting: groups of 3 digits separated by spaces
+        /* ── Habilitar botão só após aceitar checkbox ── */
+        document.getElementById('gdprConsent').addEventListener('change', function() {
+            document.getElementById('submitBtn').disabled = !this.checked;
+        });
+
+        /* ── Phone formatting ── */
         document.getElementById('phone').addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
-            // Format in groups of 3: e.g. 912 345 678
             let formatted = value.match(/.{1,3}/g);
             e.target.value = formatted ? formatted.join(' ') : '';
         });
 
-        // Form submission
+        /* ── Form submit ── */
         document.getElementById('optinForm').addEventListener('submit', function(e) {
             const button = this.querySelector('.submit-btn');
             button.textContent = 'A carregar...';
         });
 
-        // Parallax
+        /* ── Parallax ── */
         window.addEventListener('scroll', function() {
             const scrolled = window.pageYOffset;
             const pattern = document.querySelector('.bg-pattern');
-            pattern.style.transform = `translateY(${scrolled * 0.5}px)`;
+            if (pattern) pattern.style.transform = `translateY(${scrolled * 0.5}px)`;
         });
+
+        /* ── Cookie consent ── */
+        (function(){
+            var COOKIE_KEY = 'av_cookie_consent';
+            function getCookieChoice() { try { return localStorage.getItem(COOKIE_KEY); } catch(e){ return null; } }
+            function setCookieChoice(val) { try { localStorage.setItem(COOKIE_KEY, val); } catch(e){} }
+
+            function loadTracking() {
+                // Meta Pixel — substituir SEU_PIXEL_ID pelo ID real
+                !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+                n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+                document,'script','https://connect.facebook.net/en_US/fbevents.js');
+                fbq('init', 'SEU_PIXEL_ID');
+                fbq('track', 'PageView');
+                // Google Analytics — substituir G-XXXXXXXXXX pelo ID real
+                var s = document.createElement('script');
+                s.async = true;
+                s.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
+                document.head.appendChild(s);
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                window.gtag = gtag;
+                gtag('js', new Date());
+                gtag('config', 'G-XXXXXXXXXX', { anonymize_ip: true });
+            }
+
+            window.cookieAccept = function() {
+                setCookieChoice('accepted');
+                document.getElementById('cookieBanner').style.display = 'none';
+                loadTracking();
+            };
+            window.cookieReject = function() {
+                setCookieChoice('rejected');
+                document.getElementById('cookieBanner').style.display = 'none';
+            };
+
+            var choice = getCookieChoice();
+            if (choice === 'accepted') {
+                loadTracking();
+            } else if (!choice) {
+                window.addEventListener('DOMContentLoaded', function() {
+                    var b = document.getElementById('cookieBanner');
+                    if (b) b.style.display = 'flex';
+                });
+            }
+        })();
     </script>
 </body>
 </html>

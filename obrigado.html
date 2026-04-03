@@ -26,7 +26,6 @@
             min-height: 100vh;
         }
 
-        /* ── Background subtle particles ── */
         .bg-glow {
             position: fixed;
             inset: 0;
@@ -44,7 +43,6 @@
             z-index: 10;
         }
 
-        /* ── Badge ── */
         .logo-badge {
             display: inline-flex;
             align-items: center;
@@ -60,22 +58,14 @@
             color: var(--gold);
             margin-bottom: 50px;
         }
-        .shield {
-            width: 14px; height: 14px;
-            background: var(--gold);
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-        }
+        .shield { width: 14px; height: 14px; background: var(--gold); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
 
-        /* ── Success icon ── */
         .success-ring {
-            width: 110px;
-            height: 110px;
+            width: 110px; height: 110px;
             margin: 0 auto 36px;
             border-radius: 50%;
             background: linear-gradient(135deg, #4CAF50, #388E3C);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             box-shadow: 0 0 0 16px rgba(76,175,80,0.1), 0 20px 60px rgba(76,175,80,0.25);
             animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
         }
@@ -88,7 +78,6 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* ── Hero text ── */
         .hero { text-align: center; animation: fadeUp 0.7s ease-out 0.3s both; }
 
         h1 {
@@ -102,25 +91,12 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
-        .subtitle {
-            font-size: clamp(1.1rem, 2.5vw, 1.35rem);
-            line-height: 1.65;
-            color: rgba(245,241,232,0.75);
-            margin-bottom: 0;
-        }
+        .subtitle { font-size: clamp(1.1rem, 2.5vw, 1.35rem); line-height: 1.65; color: rgba(245,241,232,0.75); margin-bottom: 0; }
         .highlight { color: var(--gold); font-weight: 700; }
 
-        /* ── Divider ── */
-        .divider {
-            width: 60px; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            margin: 40px auto;
-        }
+        .divider { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 40px auto; }
 
-        /* ── Confirmation cards ── */
         .cards { display: grid; gap: 16px; margin-bottom: 40px; animation: fadeUp 0.7s ease-out 0.5s both; }
-
         .card {
             display: flex;
             align-items: flex-start;
@@ -132,42 +108,12 @@
             transition: border-color 0.3s;
         }
         .card:hover { border-color: rgba(212,165,116,0.4); }
+        .card-icon { font-size: 2rem; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+        .card-body h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold); margin-bottom: 6px; }
+        .card-body p { font-size: 1rem; line-height: 1.65; color: rgba(245,241,232,0.72); }
 
-        .card-icon {
-            font-size: 2rem;
-            flex-shrink: 0;
-            line-height: 1;
-            margin-top: 2px;
-        }
-
-        .card-body h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            color: var(--gold);
-            margin-bottom: 6px;
-        }
-        .card-body p {
-            font-size: 1rem;
-            line-height: 1.65;
-            color: rgba(245,241,232,0.72);
-        }
-
-        /* ── Instagram CTA ── */
-        .instagram-section {
-            text-align: center;
-            margin: 10px 0 50px;
-            animation: fadeUp 0.7s ease-out 0.7s both;
-        }
-
-        .instagram-label {
-            font-size: 1rem;
-            color: rgba(245,241,232,0.55);
-            margin-bottom: 18px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-size: 0.85rem;
-        }
-
+        .instagram-section { text-align: center; margin: 10px 0 50px; animation: fadeUp 0.7s ease-out 0.7s both; }
+        .instagram-label { font-size: 0.85rem; color: rgba(245,241,232,0.55); margin-bottom: 18px; text-transform: uppercase; letter-spacing: 1.5px; }
         .instagram-btn {
             display: inline-flex;
             align-items: center;
@@ -186,20 +132,12 @@
             position: relative;
             overflow: hidden;
         }
-        .instagram-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, #fcb045, #fd1d1d, #833ab4);
-            opacity: 0;
-            transition: opacity 0.35s;
-        }
+        .instagram-btn::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, #fcb045, #fd1d1d, #833ab4); opacity: 0; transition: opacity 0.35s; }
         .instagram-btn:hover::before { opacity: 1; }
         .instagram-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(131,58,180,0.5); }
         .instagram-btn span { position: relative; z-index: 1; }
         .instagram-btn svg { position: relative; z-index: 1; width: 22px; height: 22px; fill: white; flex-shrink: 0; }
 
-        /* ── Creator section ── */
         .creator {
             display: flex;
             flex-direction: column;
@@ -212,10 +150,8 @@
             margin-bottom: 60px;
             animation: fadeUp 0.7s ease-out 0.9s both;
         }
-
         .creator-photo {
-            width: 140px;
-            height: 140px;
+            width: 140px; height: 140px;
             border-radius: 50%;
             overflow: hidden;
             border: 4px solid rgba(212,165,116,0.4);
@@ -223,61 +159,29 @@
             margin-bottom: 24px;
             flex-shrink: 0;
         }
-        .creator-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center 20%;
-            display: block;
-        }
-        .creator-photo .fallback {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--darker);
-        }
+        .creator-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
+        .creator-photo .fallback { width: 100%; height: 100%; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 700; color: var(--darker); }
+        .creator-name { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
+        .creator-role { font-size: 0.95rem; color: rgba(245,241,232,0.5); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 22px; }
+        .creator-bio { font-size: 1.05rem; line-height: 1.8; color: rgba(245,241,232,0.78); max-width: 560px; }
 
-        .creator-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.7rem;
-            font-weight: 700;
-            color: var(--gold);
-            margin-bottom: 6px;
-        }
-        .creator-role {
-            font-size: 0.95rem;
-            color: rgba(245,241,232,0.5);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 22px;
-        }
-        .creator-bio {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: rgba(245,241,232,0.78);
-            max-width: 560px;
-        }
-
-        /* ── Footer ── */
+        /* Footer */
         footer {
             text-align: center;
-            color: rgba(245,241,232,0.3);
+            padding: 48px 20px 36px;
+            border-top: 1px solid rgba(212,165,116,0.1);
+            color: rgba(245,241,232,0.35);
             font-size: 0.88rem;
-            padding-bottom: 20px;
+            line-height: 1.9;
         }
+        footer a { color: rgba(212,165,116,0.65); text-decoration: none; border-bottom: 1px solid rgba(212,165,116,0.25); }
+        footer a:hover { color: var(--gold); }
 
-        /* ── Animations ── */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(24px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* ── Responsive ── */
         @media (max-width: 600px) {
             .creator { padding: 36px 24px; }
             .card { padding: 20px; }
@@ -288,7 +192,6 @@
     <div class="bg-glow"></div>
 
     <div class="container">
-
         <div style="text-align:center">
             <div class="logo-badge">
                 <div class="shield"></div>
@@ -296,7 +199,6 @@
             </div>
         </div>
 
-        <!-- Success icon -->
         <div style="text-align:center">
             <div class="success-ring">
                 <svg viewBox="0 0 52 52">
@@ -305,7 +207,6 @@
             </div>
         </div>
 
-        <!-- Hero -->
         <div class="hero">
             <h1>Sessão Confirmada.</h1>
             <p class="subtitle">
@@ -316,7 +217,6 @@
 
         <div class="divider"></div>
 
-        <!-- Confirmation cards -->
         <div class="cards">
             <div class="card">
                 <div class="card-icon">📧</div>
@@ -325,7 +225,6 @@
                     <p>Recebeste uma confirmação com os detalhes da sessão. Se não encontrares, verifica a pasta de <strong>spam ou promoções</strong>.</p>
                 </div>
             </div>
-
             <div class="card">
                 <div class="card-icon">💬</div>
                 <div class="card-body">
@@ -335,7 +234,6 @@
             </div>
         </div>
 
-        <!-- Instagram CTA -->
         <div class="instagram-section">
             <p class="instagram-label">Enquanto isso, segue para ficares por dentro</p>
             <a href="https://www.instagram.com/helderlages.10/" target="_blank" class="instagram-btn">
@@ -346,7 +244,6 @@
             </a>
         </div>
 
-        <!-- Creator section -->
         <div class="creator">
             <div class="creator-photo">
                 <img src="assets/images/FOTO_HELDER_LAGES.jpg"
@@ -357,26 +254,116 @@
             <h3 class="creator-name">Hélder Rafael da Silva Lages</h3>
             <p class="creator-role">Mentor de empreendedores</p>
             <p class="creator-bio">
-                Aos 24 anos, tornou-se um comunicador nato, escritor, investidor, empresário e mentor de empreendedores, 
+                Aos 24 anos, tornou-se um comunicador nato, escritor, investidor, empresário e mentor de empreendedores,
                 após ter faturado os seus primeiros 6 dígitos através do digital aos 21 anos.<br><br>
-                É o desenvolvedor da Teoria do Eixo Invisível e fundador da APP EXPERIENCE — uma experiência presencial 
-                de 3 dias que já impactou centenas de vidas em Portugal, criando um espaço seguro para cura emocional, 
+                É o desenvolvedor da Teoria do Eixo Invisível e fundador da APP EXPERIENCE — uma experiência presencial
+                de 3 dias que já impactou centenas de vidas em Portugal, criando um espaço seguro para cura emocional,
                 reconexão espiritual e ativação da prosperidade.
             </p>
         </div>
 
         <footer>
-            <p>© 2026 Hélder Lages • Todos os direitos reservados</p>
+            <p style="margin-bottom:6px;">
+                © 2026 <strong style="color:rgba(245,241,232,0.55);">ARCANUM VITAE, LDA</strong>
+                &nbsp;·&nbsp; NIPC 519318080
+                &nbsp;·&nbsp; Marco de Canaveses
+            </p>
+            <p style="margin-bottom:4px;">
+                <a href="politica-privacidade.html">Política de Privacidade</a>
+                &nbsp;·&nbsp;
+                <a href="politica-cookies.html">Política de Cookies</a>
+                &nbsp;·&nbsp;
+                <a href="mailto:contato@arcanumvitae.pt">contato@arcanumvitae.pt</a>
+            </p>
+            <p style="font-size:0.8rem;margin-top:4px;color:rgba(245,241,232,0.22);">
+                Todos os direitos reservados. Os dados pessoais são tratados nos termos do RGPD.
+            </p>
         </footer>
     </div>
 
+    <!-- Cookie Banner -->
+    <div id="cookieBanner" style="
+        display:none;
+        position:fixed;
+        bottom:0;left:0;right:0;
+        z-index:99999;
+        background:rgba(18,27,38,0.97);
+        border-top:1px solid rgba(212,165,116,0.22);
+        padding:14px 24px;
+        font-family:'Crimson Text',serif;
+        font-size:0.92rem;
+        color:rgba(245,241,232,0.72);
+        backdrop-filter:blur(10px);
+        align-items:center;
+        justify-content:space-between;
+        flex-wrap:wrap;
+        gap:12px;
+    ">
+        <span style="flex:1;min-width:200px;line-height:1.5;">
+            Utilizamos cookies para análise e marketing. Consulta a nossa
+            <a href="politica-cookies.html" style="color:rgba(212,165,116,0.85);text-decoration:underline;">Política de Cookies</a>.
+        </span>
+        <span style="display:flex;gap:10px;flex-shrink:0;align-items:center;">
+            <button onclick="cookieReject()" style="background:none;border:1px solid rgba(212,165,116,0.35);color:rgba(245,241,232,0.6);padding:7px 16px;border-radius:6px;font-family:'Crimson Text',serif;font-size:0.88rem;cursor:pointer;">
+                Rejeitar não essenciais
+            </button>
+            <button onclick="cookieAccept()" style="background:linear-gradient(135deg,#D4A574,#B8935F);border:none;color:#1A2332;padding:7px 20px;border-radius:6px;font-family:'Crimson Text',serif;font-size:0.88rem;font-weight:700;cursor:pointer;">
+                Aceitar
+            </button>
+        </span>
+    </div>
+
     <script>
-        // Fade in suave
         document.body.style.opacity = '0';
         window.addEventListener('load', function() {
             document.body.style.transition = 'opacity 0.6s ease';
             document.body.style.opacity = '1';
         });
+
+        (function(){
+            var COOKIE_KEY = 'av_cookie_consent';
+            function getCookieChoice() { try { return localStorage.getItem(COOKIE_KEY); } catch(e){ return null; } }
+            function setCookieChoice(val) { try { localStorage.setItem(COOKIE_KEY, val); } catch(e){} }
+
+            function loadTracking() {
+                !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+                n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+                document,'script','https://connect.facebook.net/en_US/fbevents.js');
+                fbq('init', 'SEU_PIXEL_ID');
+                fbq('track', 'PageView');
+                var s = document.createElement('script');
+                s.async = true;
+                s.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
+                document.head.appendChild(s);
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                window.gtag = gtag;
+                gtag('js', new Date());
+                gtag('config', 'G-XXXXXXXXXX', { anonymize_ip: true });
+            }
+
+            window.cookieAccept = function() {
+                setCookieChoice('accepted');
+                document.getElementById('cookieBanner').style.display = 'none';
+                loadTracking();
+            };
+            window.cookieReject = function() {
+                setCookieChoice('rejected');
+                document.getElementById('cookieBanner').style.display = 'none';
+            };
+
+            var choice = getCookieChoice();
+            if (choice === 'accepted') {
+                loadTracking();
+            } else if (!choice) {
+                window.addEventListener('DOMContentLoaded', function() {
+                    var b = document.getElementById('cookieBanner');
+                    if (b) b.style.display = 'flex';
+                });
+            }
+        })();
     </script>
 </body>
 </html>

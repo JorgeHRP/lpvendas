@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Cookies | ARCANUM VITAE, LDA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #D4A574;
+            --gold-dark: #B8935F;
+            --cream: #F5F1E8;
+            --darker: #1A2332;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: var(--darker);
+            color: var(--cream);
+            overflow-x: hidden;
+        }
+
+        .bg-glow {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse 60% 40% at 80% 10%, rgba(212,165,116,0.05) 0%, transparent 70%);
+        }
+
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 60px 24px 80px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(212,165,116,0.65);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 48px;
+            border-bottom: 1px solid rgba(212,165,116,0.25);
+            padding-bottom: 2px;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--gold); }
+
+        .doc-header {
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid rgba(212,165,116,0.15);
+        }
+        .doc-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212,165,116,0.08);
+            border: 1px solid rgba(212,165,116,0.25);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 900;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+        .doc-meta {
+            font-size: 0.88rem;
+            color: rgba(245,241,232,0.4);
+            line-height: 1.7;
+        }
+        .doc-meta strong { color: rgba(245,241,232,0.65); }
+
+        .doc-section { margin-bottom: 44px; }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(212,165,116,0.12);
+        }
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: rgba(212,165,116,0.8);
+            margin: 20px 0 10px;
+        }
+        p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(245,241,232,0.72);
+            margin-bottom: 14px;
+        }
+        ul { list-style: none; padding: 0; margin-bottom: 14px; }
+        ul li {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: rgba(245,241,232,0.72);
+            padding: 4px 0 4px 18px;
+            position: relative;
+        }
+        ul li::before {
+            content: '·';
+            position: absolute;
+            left: 4px;
+            color: var(--gold);
+            font-weight: 700;
+        }
+        a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(212,165,116,0.3); }
+        a:hover { border-color: var(--gold); }
+
+        /* Cookie table */
+        .cookie-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        .cookie-table th {
+            text-align: left;
+            padding: 10px 14px;
+            background: rgba(212,165,116,0.08);
+            color: var(--gold);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(212,165,116,0.2);
+        }
+        .cookie-table td {
+            padding: 10px 14px;
+            color: rgba(245,241,232,0.68);
+            border-bottom: 1px solid rgba(212,165,116,0.07);
+            line-height: 1.55;
+            vertical-align: top;
+        }
+        .cookie-table tr:last-child td { border-bottom: none; }
+        .cookie-table tr:hover td { background: rgba(212,165,116,0.03); }
+
+        .badge-required {
+            display: inline-block;
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: rgba(212,165,116,0.15);
+            color: var(--gold);
+            border: 1px solid rgba(212,165,116,0.25);
+        }
+        .badge-exempt {
+            display: inline-block;
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: rgba(76,175,80,0.1);
+            color: #81C784;
+            border: 1px solid rgba(76,175,80,0.2);
+        }
+
+        /* Preferences button */
+        .prefs-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212,165,116,0.08);
+            border: 1px solid rgba(212,165,116,0.3);
+            color: var(--gold);
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-family: 'Crimson Text', serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 14px;
+        }
+        .prefs-btn:hover { background: rgba(212,165,116,0.14); border-color: var(--gold); }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 48px 20px 36px;
+            border-top: 1px solid rgba(212,165,116,0.1);
+            color: rgba(245,241,232,0.35);
+            font-size: 0.88rem;
+            line-height: 1.9;
+            margin-top: 20px;
+        }
+        footer a { color: rgba(212,165,116,0.65); border-bottom: 1px solid rgba(212,165,116,0.25); }
+        footer a:hover { color: var(--gold); }
+
+        @media (max-width: 600px) {
+            .container { padding: 40px 16px 60px; }
+            .cookie-table { font-size: 0.8rem; }
+            .cookie-table th, .cookie-table td { padding: 8px 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+
+    <div class="container">
+        <a href="javascript:history.back()" class="back-link">← Voltar</a>
+
+        <div class="doc-header">
+            <div class="doc-badge">Diretiva ePrivacy · RGPD · Lei 41/2004</div>
+            <h1>Política de Cookies</h1>
+            <p class="doc-meta">
+                <strong>Entidade:</strong> ARCANUM VITAE, LDA &nbsp;·&nbsp; <strong>NIPC:</strong> 519318080<br>
+                Contacto: <strong>contato@arcanumvitae.pt</strong>
+            </p>
+        </div>
+
+        <div class="doc-section">
+            <h2>1. O que são Cookies?</h2>
+            <p>Cookies são pequenos ficheiros de texto colocados no seu dispositivo quando visita o nosso website. Permitem memorizar preferências e ações ao longo do tempo. Utilizamos também tecnologias similares como web beacons, pixel tags, scripts de rastreamento e armazenamento local (LocalStorage e SessionStorage), às quais se aplicam, mutatis mutandis, as disposições desta Política.</p>
+        </div>
+
+        <div class="doc-section">
+            <h2>2. Tipos de Cookies Utilizados</h2>
+            <h3>2.1 Por duração</h3>
+            <ul>
+                <li><strong>Cookies de sessão:</strong> eliminados automaticamente quando fecha o browser.</li>
+                <li><strong>Cookies persistentes:</strong> permanecem no seu dispositivo por um período determinado, mesmo após fechar o browser.</li>
+            </ul>
+            <h3>2.2 Por proveniência</h3>
+            <ul>
+                <li><strong>Primeira parte (first-party):</strong> colocados diretamente pela ARCANUM VITAE, LDA.</li>
+                <li><strong>Terceiras partes (third-party):</strong> colocados por entidades externas (ex.: Google, Meta).</li>
+            </ul>
+            <h3>2.3 Por finalidade</h3>
+            <table class="cookie-table">
+                <thead>
+                    <tr>
+                        <th>Categoria</th>
+                        <th>Finalidade</th>
+                        <th>Exemplos</th>
+                        <th>Consentimento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Estritamente necessários</td>
+                        <td>Funcionamento básico e segurança</td>
+                        <td>Autenticação, segurança CSRF</td>
+                        <td><span class="badge-exempt">Não necessário</span></td>
+                    </tr>
+                    <tr>
+                        <td>Funcionais / Preferências</td>
+                        <td>Personalização da experiência</td>
+                        <td>Idioma, localização</td>
+                        <td><span class="badge-required">Necessário</span></td>
+                    </tr>
+                    <tr>
+                        <td>Analíticos / Desempenho</td>
+                        <td>Análise de tráfego e comportamento</td>
+                        <td>Google Analytics, Hotjar</td>
+                        <td><span class="badge-required">Necessário</span></td>
+                    </tr>
+                    <tr>
+                        <td>Marketing / Publicidade</td>
+                        <td>Publicidade personalizada e remarketing</td>
+                        <td>Meta Pixel, Google Ads</td>
+                        <td><span class="badge-required">Necessário</span></td>
+                    </tr>
+                    <tr>
+                        <td>Redes Sociais</td>
+                        <td>Integração e partilha em redes sociais</td>
+                        <td>Botões de partilha Instagram</td>
+                        <td><span class="badge-required">Necessário</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="doc-section">
+            <h2>3. Cookies de Terceiros Específicos</h2>
+            <h3>3.1 Google Analytics e Google Ads</h3>
+            <p>Utilizamos o Google Analytics para análise de desempenho. Os dados são tratados pela Google LLC. Consulte a <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">política de privacidade da Google</a>. Para recusar o rastreamento, utilize o <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">complemento de browser disponível aqui</a>.</p>
+            <h3>3.2 Meta Pixel (Facebook/Instagram)</h3>
+            <p>O Meta Pixel permite-nos medir a eficácia das campanhas publicitárias. Os dados são tratados pela Meta Platforms Ireland Ltd. Para gerir as suas preferências de publicidade da Meta, aceda a <a href="https://www.facebook.com/ads/preferences" target="_blank" rel="noopener">facebook.com/ads/preferences</a>.</p>
+            <h3>3.3 Plataformas de e-learning</h3>
+            <p>As plataformas de gestão de cursos e formações (Hotmart, Eduzz ou similares) utilizam cookies próprios para autenticação e personalização, sujeitos às respetivas políticas de privacidade.</p>
+        </div>
+
+        <div class="doc-section">
+            <h2>4. Gestão e Controlo de Cookies</h2>
+            <h3>4.1 Painel de preferências</h3>
+            <p>Pode gerir as suas preferências de cookies a qualquer momento através do painel de controlo disponível neste website.</p>
+            <button class="prefs-btn" onclick="resetCookieConsent()">
+                ⚙ Gerir preferências de cookies
+            </button>
+            <h3>4.2 Configuração do browser</h3>
+            <p>Pode também gerir ou bloquear cookies diretamente no seu browser. Note que o bloqueio de cookies essenciais pode comprometer o funcionamento do website.</p>
+            <ul>
+                <li><strong>Google Chrome:</strong> Definições › Privacidade e segurança › Cookies</li>
+                <li><strong>Mozilla Firefox:</strong> Opções › Privacidade e segurança › Cookies e dados de sites</li>
+                <li><strong>Safari:</strong> Preferências › Privacidade › Cookies e dados de websites</li>
+                <li><strong>Microsoft Edge:</strong> Definições › Cookies e permissões do site › Cookies</li>
+            </ul>
+        </div>
+
+        <div class="doc-section">
+            <h2>5. Período de Conservação</h2>
+            <p>Os dados recolhidos através de cookies analíticos e de marketing são conservados pelo período estritamente necessário às finalidades para que foram recolhidos, não excedendo 13 meses para cookies analíticos (conforme recomendação da CNIL e CEPD) e 6 meses para cookies de sessão. O consentimento do utilizador é renovado anualmente.</p>
+        </div>
+
+        <div class="doc-section">
+            <h2>6. Base Legal</h2>
+            <ul>
+                <li><strong>Cookies estritamente necessários:</strong> Interesse legítimo (Art.º 6.º, n.º 1, al. f) RGPD) e isenção prevista no Art.º 5.º, n.º 3 da Diretiva 2002/58/CE.</li>
+                <li><strong>Todos os outros cookies:</strong> Consentimento explícito e informado do utilizador (Art.º 6.º, n.º 1, al. a) RGPD e Art.º 5.º, n.º 3 da Diretiva ePrivacy).</li>
+            </ul>
+        </div>
+
+        <div class="doc-section">
+            <h2>7. Contactos e Reclamações</h2>
+            <p>Para questões relativas a esta Política de Cookies, contacte a ARCANUM VITAE, LDA através de <a href="mailto:contato@arcanumvitae.pt">contato@arcanumvitae.pt</a>.</p>
+            <p>Em caso de reclamação, pode também dirigir-se à <a href="https://www.cnpd.pt" target="_blank" rel="noopener">Comissão Nacional de Proteção de Dados (CNPD)</a> em www.cnpd.pt.</p>
+        </div>
+
+        <footer>
+            <p style="margin-bottom:6px;">
+                © 2026 <strong style="color:rgba(245,241,232,0.55);">ARCANUM VITAE, LDA</strong>
+                &nbsp;·&nbsp; NIPC 519318080
+                &nbsp;·&nbsp; Marco de Canaveses
+            </p>
+            <p style="margin-bottom:4px;">
+                <a href="politica-privacidade.html">Política de Privacidade</a>
+                &nbsp;·&nbsp;
+                <a href="politica-cookies.html">Política de Cookies</a>
+                &nbsp;·&nbsp;
+                <a href="mailto:contato@arcanumvitae.pt">contato@arcanumvitae.pt</a>
+            </p>
+            <p style="font-size:0.8rem;margin-top:4px;color:rgba(245,241,232,0.22);">
+                Todos os direitos reservados. Os dados pessoais são tratados nos termos do RGPD.
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Botão "Gerir preferências" — limpa a escolha e recarrega
+        function resetCookieConsent() {
+            try { localStorage.removeItem('av_cookie_consent'); } catch(e){}
+            window.location.reload();
+        }
+
+        // Mostrar banner se não houver escolha guardada
+        (function(){
+            var choice;
+            try { choice = localStorage.getItem('av_cookie_consent'); } catch(e){}
+            if (!choice) {
+                // Banner inline nesta página
+                var banner = document.createElement('div');
+                banner.id = 'cookieBanner';
+                banner.style.cssText = 'display:flex;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:rgba(18,27,38,0.97);border-top:1px solid rgba(212,165,116,0.22);padding:14px 24px;font-family:"Crimson Text",serif;font-size:0.92rem;color:rgba(245,241,232,0.72);backdrop-filter:blur(10px);align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;';
+                banner.innerHTML = '<span style="flex:1;min-width:200px;line-height:1.5;">Utilizamos cookies para análise e marketing. Consulta a nossa <a href="politica-cookies.html" style="color:rgba(212,165,116,0.85);text-decoration:underline;">Política de Cookies</a>.</span><span style="display:flex;gap:10px;flex-shrink:0;align-items:center;"><button onclick="cookieReject()" style="background:none;border:1px solid rgba(212,165,116,0.35);color:rgba(245,241,232,0.6);padding:7px 16px;border-radius:6px;font-family:\'Crimson Text\',serif;font-size:0.88rem;cursor:pointer;">Rejeitar não essenciais</button><button onclick="cookieAccept()" style="background:linear-gradient(135deg,#D4A574,#B8935F);border:none;color:#1A2332;padding:7px 20px;border-radius:6px;font-family:\'Crimson Text\',serif;font-size:0.88rem;font-weight:700;cursor:pointer;">Aceitar</button></span>';
+                document.body.appendChild(banner);
+            }
+        })();
+
+        window.cookieAccept = function() {
+            try { localStorage.setItem('av_cookie_consent', 'accepted'); } catch(e){}
+            var b = document.getElementById('cookieBanner');
+            if (b) b.style.display = 'none';
+        };
+        window.cookieReject = function() {
+            try { localStorage.setItem('av_cookie_consent', 'rejected'); } catch(e){}
+            var b = document.getElementById('cookieBanner');
+            if (b) b.style.display = 'none';
+        };
+    </script>
+</body>
+</html>
