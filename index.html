@@ -365,6 +365,24 @@
             .benefit-item { padding: 15px; }
         }
     </style>
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1346387974184378');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1346387974184378&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
 </head>
 <body>
     <div class="bg-pattern"></div>
@@ -419,7 +437,7 @@
                 &nbsp;·&nbsp;
                 <a href="politica-cookies.html">Política de Cookies</a>
                 &nbsp;·&nbsp;
-                <a href="mailto:contato@arcanumvitae.pt">contato@arcanumvitae.pt</a>
+                <a href="/cdn-cgi/l/email-protection#64070b0a1005100b24051607050a1109120d1005014a1410"><span class="__cf_email__" data-cfemail="e4878b8a9085908ba4859687858a9189928d908581ca9490">[email&#160;protected]</span></a>
             </p>
             <p style="font-size:0.8rem;margin-top:4px;color:rgba(245,241,232,0.22);">
                 Todos os direitos reservados. Os dados pessoais são tratados nos termos do RGPD.
@@ -537,7 +555,7 @@
         </span>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         /* ── Modal ── */
         function openModal() {
             document.getElementById('modalOverlay').classList.add('active');
@@ -569,10 +587,58 @@
             }
         });
 
-        /* ── Form submit ── */
+        /* ── Webhook URL — definida via variável de ambiente (entrypoint.sh) ── */
+        var WEBHOOK_URL = 'https://jorge-n8n.rijyaf.easypanel.host/webhook/28fb966f-a66a-49fe-b7b3-987ed8e06b5a';
+
+        /* ── Form submit com envio para webhook ── */
         document.getElementById('optinForm').addEventListener('submit', function(e) {
-            const button = this.querySelector('.submit-btn');
+            e.preventDefault();
+            var form   = this;
+            var button = form.querySelector('.submit-btn');
             button.textContent = 'A carregar...';
+            button.disabled = true;
+
+            var name      = document.getElementById('name').value.trim();
+            var email     = document.getElementById('email').value.trim();
+            var ddi       = document.getElementById('ddi').value;
+            var phone     = document.getElementById('phone').value.replace(/\s/g, '');
+            var fullPhone = ddi + phone;
+
+            var payload = {
+                nome:              name,
+                email:             email,
+                ddi:               ddi,
+                telefone:          phone,
+                telefone_completo: fullPhone,
+                gdpr_consent:      document.getElementById('gdprConsent').checked,
+                timestamp:         new Date().toISOString(),
+                origem:            window.location.href
+            };
+
+            function goNext() {
+                var nextUrl = form.action
+                    + '?name='  + encodeURIComponent(name)
+                    + '&email=' + encodeURIComponent(email)
+                    + '&phone=' + encodeURIComponent(fullPhone);
+                window.location.href = nextUrl;
+            }
+
+            /* Dispara evento Lead no Meta Pixel, se disponível */
+            if (typeof fbq === 'function') {
+                fbq('track', 'Lead', { em: email, fn: name, ph: fullPhone });
+            }
+
+            if (WEBHOOK_URL && WEBHOOK_URL !== '__WEBHOOK_URL__') {
+                fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                })
+                .then(function() { goNext(); })
+                .catch(function() { goNext(); });
+            } else {
+                goNext();
+            }
         });
 
         /* ── Parallax ── */
@@ -595,7 +661,7 @@
                 n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
                 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
                 document,'script','https://connect.facebook.net/en_US/fbevents.js');
-                fbq('init', 'SEU_PIXEL_ID');
+                fbq('init', '1346387974184378');
                 fbq('track', 'PageView');
                 // Google Analytics — substituir G-XXXXXXXXXX pelo ID real
                 var s = document.createElement('script');
@@ -619,14 +685,22 @@
                 document.getElementById('cookieBanner').style.display = 'none';
             };
 
+
+            window.cookieAccept = function() {
+                setCookieChoice('accepted');
+                document.getElementById('cookieBanner').style.display = 'none';
+                loadTracking();
+            };
+            window.cookieReject = function() {
+                setCookieChoice('rejected');
+                document.getElementById('cookieBanner').style.display = 'none';
+            };
+
             var choice = getCookieChoice();
             if (choice === 'accepted') {
                 loadTracking();
             } else if (!choice) {
-                window.addEventListener('DOMContentLoaded', function() {
-                    var b = document.getElementById('cookieBanner');
-                    if (b) b.style.display = 'flex';
-                });
+                document.getElementById('cookieBanner').style.display = 'flex';
             }
         })();
     </script>
